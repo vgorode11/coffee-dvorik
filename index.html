@@ -1,0 +1,4208 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Кофейный дворик | Владикавказ</title>
+    
+    <!-- Стили -->
+    <style>
+        /* ========== ОСНОВНЫЕ СТИЛИ ========== */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        :root {
+            --green-dark: #5D7B6F;      /* Приглушенный темно-зеленый */
+            --green: #7A9B8E;           /* Приглушенный средне-зеленый */
+            --green-light: #B2C6BD;     /* Светлый приглушенный зеленый */
+            --cream: #F5F1E8;           /* Теплый кремовый */
+            --coffee: #8B7355;          /* Цвет кофе */
+            --white: #FFFFFF;
+            --gray: #6B6B6B;
+            --transition: all 0.3s ease;
+        }
+        
+        body {
+            font-family: 'Montserrat', Arial, sans-serif;
+            color: var(--green-dark);
+            background-color: var(--cream);
+            line-height: 1.6;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+        
+        /* ========== ВЕРХНИЙ СЛАЙДЕР С АВТОСМЕНОЙ ========== */
+        .top-banner-slider {
+            width: 100%;
+            position: relative;
+            display: block;
+            margin-bottom: 0;
+            overflow: hidden;
+            border-radius: 0 0 24px 24px;
+            max-width: 1350px;
+            margin: 0 auto;
+        }
+        
+        .slider-container {
+            position: relative;
+            width: 100%;
+            height: 500px;
+            overflow: hidden;
+        }
+        
+        .slide {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            opacity: 0;
+            transition: opacity 0.8s ease-in-out;
+        }
+        
+        .slide.active {
+            opacity: 1;
+            z-index: 1;
+        }
+        
+        .slide-image {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            border-radius: 0 0 24px 24px;
+        }
+        
+        /* Кнопки слайдера */
+        .slider-btn {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            background: rgba(255, 255, 255, 0.3);
+            border: none;
+            color: var(--white);
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            cursor: pointer;
+            z-index: 10;
+            font-size: 20px;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .slider-btn:hover {
+            background: rgba(255, 255, 255, 0.5);
+            transform: translateY(-50%) scale(1.1);
+        }
+        
+        .prev-btn {
+            left: 20px;
+        }
+        
+        .next-btn {
+            right: 20px;
+        }
+        
+        /* Точки-индикаторы */
+        .slider-dots {
+            position: absolute;
+            bottom: 20px;
+            left: 0;
+            right: 0;
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+            z-index: 10;
+        }
+        
+        .dot {
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.5);
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        
+        .dot.active {
+            background: var(--white);
+            transform: scale(1.2);
+        }
+        
+        .dot:hover {
+            background: rgba(255, 255, 255, 0.8);
+        }
+        
+        /* Для десктопа - высота как на примере */
+        @media (min-width: 769px) {
+            .slider-container {
+                height: 550px;
+                min-height: 500px;
+            }
+            
+            .top-banner-slider {
+                border-radius: 0 0 32px 32px;
+            }
+            
+            .slide-image {
+                border-radius: 0 0 32px 32px;
+            }
+        }
+        
+        /* Для мобильных - адаптивная высота */
+        @media (max-width: 768px) {
+            .slider-container {
+                height: 400px;
+                min-height: 300px;
+            }
+            
+            .slider-btn {
+                width: 40px;
+                height: 40px;
+                font-size: 16px;
+            }
+        }
+        
+        /* Для маленьких экранов */
+        @media (max-width: 480px) {
+            .slider-container {
+                height: 300px;
+                min-height: 250px;
+            }
+            
+            .slider-btn {
+                width: 35px;
+                height: 35px;
+                font-size: 14px;
+            }
+        }
+        
+        /* ========== ШАПКА ========== */
+        .header {
+            position: sticky;
+            top: 0;
+            left: 0;
+            width: 100%;
+            background-color: var(--white);
+            border-bottom: 1px solid var(--green-light);
+            z-index: 1000;
+            padding: 15px 0;
+            backdrop-filter: blur(5px);
+            background-color: rgba(255, 255, 255, 0.95);
+        }
+        
+        .nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        /* ЛОГОТИП */
+        .logo {
+            display: flex;
+            flex-direction: column;
+            line-height: 1;
+        }
+        
+        .logo-main {
+            font-size: 28px;
+            font-weight: 800;
+            letter-spacing: 1px;
+            color: var(--green-dark);
+        }
+        
+        .logo-sub {
+            font-size: 12px;
+            font-weight: 400;
+            letter-spacing: 2px;
+            margin-top: 2px;
+            color: var(--green);
+        }
+        
+        /* МЕНЮ */
+        .nav-menu {
+            display: flex;
+            gap: 40px;
+        }
+        
+        .nav-link {
+            text-decoration: none;
+            color: var(--green-dark);
+            font-weight: 500;
+            font-size: 14px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            padding: 5px 0;
+            position: relative;
+            transition: var(--transition);
+        }
+        
+        .nav-link:hover,
+        .nav-link.active {
+            color: var(--green);
+        }
+        
+        .nav-link.active::after {
+            content: '';
+            position: absolute;
+            bottom: -2px;
+            left: 0;
+            width: 100%;
+            height: 2px;
+            background-color: var(--green);
+        }
+        
+        /* ========== ГЛАВНЫЙ БАННЕР ========== */
+        .hero {
+            padding: 100px 0 80px;
+            background: linear-gradient(rgba(93, 123, 111, 0.8), rgba(122, 155, 142, 0.8)), url('https://images.unsplash.com/photo-1498804103079-a6351b050096?ixlib=rb-4.0.3&auto=format&fit=crop&w=1200&q=80');
+            background-size: cover;
+            background-position: center;
+            color: var(--white);
+            text-align: center;
+            margin-top: 0;
+        }
+        
+        .hero-logo {
+            margin-bottom: 40px;
+        }
+        
+        .hero-logo .logo-main {
+            font-size: 60px;
+            color: var(--white);
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+        }
+        
+        .hero-logo .logo-sub {
+            font-size: 18px;
+            letter-spacing: 4px;
+            color: var(--cream);
+            opacity: 0.9;
+        }
+        
+        .hero-title {
+            font-size: 28px;
+            font-weight: 400;
+            margin-bottom: 30px;
+            letter-spacing: 2px;
+            opacity: 0.9;
+            font-style: italic;
+            max-width: 800px;
+            margin-left: auto;
+            margin-right: auto;
+            line-height: 1.4;
+        }
+        
+        .hero-subtitle {
+            font-size: 20px;
+            font-weight: 300;
+            margin-bottom: 50px;
+            letter-spacing: 1px;
+            opacity: 0.9;
+            max-width: 600px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+        
+        /* КНОПКА */
+        .btn-view-menu {
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            text-decoration: none;
+            background-color: var(--white);
+            color: var(--green-dark);
+            font-weight: 500;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            font-size: 14px;
+            padding: 15px 40px;
+            border-radius: 30px;
+            border: 2px solid var(--white);
+            transition: var(--transition);
+        }
+        
+        .btn-view-menu:hover {
+            background-color: transparent;
+            color: var(--white);
+        }
+
+        /* ========== МЕНЮ ========== */
+        .menu-section {
+            padding: 80px 0;
+            background-color: var(--cream);
+        }
+        
+        .section-title {
+            font-size: 36px;
+            font-weight: 400;
+            text-align: center;
+            margin-bottom: 50px;
+            color: var(--green-dark);
+        }
+        
+        /* ФИЛЬТРЫ */
+        .category-filters {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            margin-bottom: 50px;
+            flex-wrap: wrap;
+        }
+        
+        .filter-btn {
+            padding: 10px 25px;
+            background: none;
+            border: 2px solid var(--green);
+            color: var(--green);
+            font-family: 'Montserrat', sans-serif;
+            font-size: 14px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: var(--transition);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            border-radius: 25px;
+        }
+        
+        .filter-btn:hover,
+        .filter-btn.active {
+            background-color: var(--green);
+            color: var(--white);
+        }
+        
+        /* ТОВАРЫ */
+        .menu-items {
+            max-width: 900px;
+            margin: 0 auto;
+            display: grid;
+            gap: 30px;
+        }
+        
+        .menu-item {
+            display: flex;
+            gap: 30px;
+            padding: 25px;
+            border-radius: 15px;
+            background-color: var(--white);
+            box-shadow: 0 5px 15px rgba(122, 155, 142, 0.1);
+            transition: var(--transition);
+            cursor: pointer;
+        }
+        
+        .menu-item:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px rgba(122, 155, 142, 0.2);
+        }
+        
+        .item-image {
+            width: 130px;
+            height: 130px;
+            background-color: var(--green-light);
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+            overflow: hidden;
+        }
+        
+        .item-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+        
+        .item-info {
+            flex: 1;
+        }
+        
+        .item-title {
+            font-size: 22px;
+            font-weight: 600;
+            margin-bottom: 10px;
+            color: var(--green-dark);
+        }
+        
+        .item-desc {
+            color: var(--gray);
+            font-size: 14px;
+            margin-bottom: 15px;
+        }
+        
+        .item-price {
+            font-size: 24px;
+            font-weight: 700;
+            margin-bottom: 15px;
+            color: var(--green);
+        }
+        
+        /* ========== AI-РЕКОМЕНДАТЕЛЬНАЯ СИСТЕМА ========== */
+        .ai-recommendation-section {
+            padding: 40px 0;
+            margin: 40px 0;
+            background: linear-gradient(135deg, rgba(93, 123, 111, 0.05) 0%, rgba(122, 155, 142, 0.05) 100%);
+            border-radius: 20px;
+            border: 1px solid rgba(122, 155, 142, 0.1);
+        }
+
+        .ai-container {
+            max-width: 700px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        .ai-header {
+            text-align: center;
+            margin-bottom: 40px;
+        }
+
+        .ai-icon {
+            position: relative;
+            display: inline-block;
+            margin-bottom: 20px;
+        }
+
+        .ai-icon i {
+            font-size: 48px;
+            color: var(--green);
+            background: var(--white);
+            width: 80px;
+            height: 80px;
+            line-height: 80px;
+            border-radius: 50%;
+            box-shadow: 0 10px 30px rgba(122, 155, 142, 0.2);
+        }
+
+        .ai-pulse {
+            position: absolute;
+            top: -10px;
+            left: -10px;
+            right: -10px;
+            bottom: -10px;
+            border: 2px solid var(--green-light);
+            border-radius: 50%;
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes pulse {
+            0% {
+                transform: scale(1);
+                opacity: 1;
+            }
+            100% {
+                transform: scale(1.3);
+                opacity: 0;
+            }
+        }
+
+        .ai-header h3 {
+            font-size: 28px;
+            color: var(--green-dark);
+            margin-bottom: 10px;
+        }
+
+        .ai-subtitle {
+            color: var(--gray);
+            font-size: 16px;
+            max-width: 500px;
+            margin: 0 auto;
+        }
+
+        /* Прогресс-бар */
+        .ai-progress {
+            position: relative;
+            height: 4px;
+            background: var(--green-light);
+            border-radius: 2px;
+            margin-bottom: 40px;
+            overflow: hidden;
+        }
+
+        .ai-progress-bar {
+            position: absolute;
+            top: 0;
+            left: 0;
+            height: 100%;
+            background: var(--green);
+            border-radius: 2px;
+            transition: width 0.5s ease;
+        }
+
+        .ai-progress-steps {
+            position: absolute;
+            top: -10px;
+            left: 0;
+            right: 0;
+            display: flex;
+            justify-content: space-between;
+        }
+
+        .ai-step-dot {
+            width: 24px;
+            height: 24px;
+            border-radius: 50%;
+            background: var(--white);
+            border: 2px solid var(--green-light);
+            color: var(--green-light);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 12px;
+            font-weight: 600;
+        }
+
+        .ai-step-dot.active {
+            background: var(--green);
+            border-color: var(--green);
+            color: var(--white);
+        }
+
+        /* Шаги визарда */
+        .ai-step {
+            display: none;
+            animation: fadeIn 0.5s ease;
+        }
+
+        .ai-step.active {
+            display: block;
+        }
+
+        .ai-step h4 {
+            font-size: 22px;
+            color: var(--green-dark);
+            margin-bottom: 10px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .step-number {
+            color: var(--green);
+            font-weight: 700;
+            font-size: 18px;
+        }
+
+        .step-description {
+            color: var(--gray);
+            margin-bottom: 30px;
+            font-size: 15px;
+        }
+
+        /* Опции */
+        .ai-options {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 15px;
+            margin-bottom: 30px;
+        }
+
+        .ai-option {
+            background: var(--white);
+            border: 2px solid var(--green-light);
+            border-radius: 12px;
+            padding: 20px;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-align: left;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .ai-option:hover {
+            border-color: var(--green);
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(122, 155, 142, 0.1);
+        }
+
+        .ai-option.selected {
+            background: rgba(122, 155, 142, 0.1);
+            border-color: var(--green);
+        }
+
+        .ai-option.selected .option-check {
+            opacity: 1;
+            transform: scale(1);
+        }
+
+        .option-icon {
+            width: 50px;
+            height: 50px;
+            background: rgba(122, 155, 142, 0.1);
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+        }
+
+        .option-icon i {
+            font-size: 20px;
+            color: var(--green);
+        }
+
+        .option-content {
+            flex: 1;
+        }
+
+        .option-title {
+            display: block;
+            font-weight: 600;
+            color: var(--green-dark);
+            margin-bottom: 4px;
+            font-size: 16px;
+        }
+
+        .option-desc {
+            display: block;
+            font-size: 13px;
+            color: var(--gray);
+        }
+
+        .option-check {
+            opacity: 0;
+            transform: scale(0.5);
+            transition: all 0.3s ease;
+            width: 24px;
+            height: 24px;
+            background: var(--green);
+            color: var(--white);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 12px;
+        }
+
+        /* Навигация */
+        .ai-step-navigation {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 30px;
+        }
+
+        .ai-prev-btn, .ai-next-btn, .ai-submit-btn {
+            padding: 12px 30px;
+            border-radius: 25px;
+            font-family: 'Montserrat', sans-serif;
+            font-weight: 500;
+            font-size: 14px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            border: none;
+        }
+
+        .ai-prev-btn {
+            background: transparent;
+            color: var(--gray);
+            border: 2px solid var(--green-light);
+        }
+
+        .ai-prev-btn:hover {
+            background: var(--green-light);
+            color: var(--white);
+        }
+
+        .ai-next-btn, .ai-submit-btn {
+            background: var(--green-light);
+            color: var(--white);
+        }
+
+        .ai-next-btn:hover:not(:disabled),
+        .ai-submit-btn:hover:not(:disabled) {
+            background: var(--green);
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(122, 155, 142, 0.3);
+        }
+
+        .ai-next-btn:disabled,
+        .ai-submit-btn:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+            transform: none;
+        }
+
+        .ai-submit-btn {
+            background: linear-gradient(45deg, var(--green), var(--green-dark));
+        }
+
+        /* Результат */
+        .ai-result {
+            display: none;
+            animation: slideUp 0.5s ease;
+        }
+
+        @keyframes slideUp {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .result-header {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+        .result-icon {
+            width: 70px;
+            height: 70px;
+            background: linear-gradient(45deg, var(--green), var(--green-dark));
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 20px;
+            color: var(--white);
+            font-size: 30px;
+            box-shadow: 0 10px 20px rgba(122, 155, 142, 0.3);
+        }
+
+        .result-header h3 {
+            font-size: 26px;
+            color: var(--green-dark);
+            margin-bottom: 10px;
+        }
+
+        .result-subtitle {
+            color: var(--gray);
+            font-size: 16px;
+        }
+
+        /* Рекомендуемый продукт */
+        .recommended-product {
+            background: var(--white);
+            border-radius: 15px;
+            padding: 25px;
+            margin: 30px 0;
+            display: flex;
+            gap: 25px;
+            align-items: center;
+            box-shadow: 0 10px 30px rgba(122, 155, 142, 0.1);
+            border: 1px solid var(--green-light);
+        }
+
+        .recommended-image {
+            width: 120px;
+            height: 120px;
+            border-radius: 10px;
+            overflow: hidden;
+            flex-shrink: 0;
+        }
+
+        .recommended-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .recommended-info {
+            flex: 1;
+        }
+
+        .recommended-info h4 {
+            font-size: 24px;
+            color: var(--green-dark);
+            margin-bottom: 10px;
+        }
+
+        .rec-description {
+            color: var(--gray);
+            margin-bottom: 15px;
+            font-size: 15px;
+        }
+
+        .rec-price {
+            font-size: 28px;
+            font-weight: 700;
+            color: var(--green);
+            margin-bottom: 20px;
+        }
+
+        .rec-reasons h5 {
+            font-size: 16px;
+            color: var(--green-dark);
+            margin-bottom: 10px;
+        }
+
+        .rec-reasons ul {
+            list-style: none;
+            padding: 0;
+        }
+
+        .rec-reasons li {
+            color: var(--gray);
+            font-size: 14px;
+            margin-bottom: 8px;
+            padding-left: 20px;
+            position: relative;
+        }
+
+        .rec-reasons li:before {
+            content: '✓';
+            position: absolute;
+            left: 0;
+            color: var(--green);
+            font-weight: bold;
+        }
+
+        /* Действия с результатом */
+        .result-actions {
+            display: flex;
+            gap: 15px;
+            margin: 30px 0;
+            flex-wrap: wrap;
+        }
+
+        .rec-action-btn {
+            flex: 1;
+            min-width: 150px;
+            padding: 15px 20px;
+            border-radius: 10px;
+            border: none;
+            font-family: 'Montserrat', sans-serif;
+            font-weight: 500;
+            font-size: 15px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+        }
+
+        #recOrderBtn {
+            background: linear-gradient(45deg, var(--green), var(--green-dark));
+            color: var(--white);
+        }
+
+        #recOrderBtn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 20px rgba(122, 155, 142, 0.3);
+        }
+
+        .rec-action-btn.secondary {
+            background: var(--green-light);
+            color: var(--white);
+        }
+
+        .rec-action-btn.outline {
+            background: transparent;
+            color: var(--green);
+            border: 2px solid var(--green);
+        }
+
+        .rec-action-btn:hover {
+            transform: translateY(-2px);
+        }
+
+        .result-footer {
+            background: rgba(122, 155, 142, 0.05);
+            border-radius: 10px;
+            padding: 15px;
+            text-align: center;
+            border: 1px solid rgba(122, 155, 142, 0.1);
+        }
+
+        .result-footer p {
+            margin: 0;
+            font-size: 14px;
+            color: var(--green-dark);
+        }
+
+        .result-footer i {
+            color: var(--green);
+            margin-right: 8px;
+        }
+
+        .ai-footer {
+            text-align: center;
+            margin-top: 30px;
+            padding-top: 20px;
+            border-top: 1px solid rgba(122, 155, 142, 0.1);
+            color: var(--gray);
+            font-size: 14px;
+        }
+
+        .ai-footer i {
+            color: var(--green);
+            margin-right: 8px;
+        }
+
+        /* ========== МОДАЛЬНОЕ ОКНО КАРТОЧКИ ========== */
+        .modal-overlay {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.7);
+            z-index: 2000;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+        
+        .modal-overlay.active {
+            display: flex;
+            animation: fadeIn 0.3s ease;
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+        
+        .modal-card {
+            background: white;
+            border-radius: 15px;
+            overflow: hidden;
+            width: 100%;
+            max-width: 500px;
+            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.3);
+            transform: translateY(20px);
+            animation: slideUp 0.4s ease forwards;
+        }
+        
+        .modal-header {
+            background: var(--green);
+            color: white;
+            padding: 25px;
+            position: relative;
+        }
+        
+        .modal-title {
+            font-size: 28px;
+            font-weight: bold;
+            margin-bottom: 5px;
+        }
+        
+        .modal-close {
+            position: absolute;
+            top: 15px;
+            right: 20px;
+            background: none;
+            border: none;
+            color: white;
+            font-size: 28px;
+            cursor: pointer;
+            transition: transform 0.2s;
+        }
+        
+        .modal-close:hover {
+            transform: scale(1.2);
+        }
+        
+        .modal-content {
+            padding: 25px;
+        }
+        
+        .modal-section {
+            margin-bottom: 20px;
+        }
+        
+        .section-label {
+            font-size: 16px;
+            font-weight: bold;
+            color: var(--green-dark);
+            margin-bottom: 8px;
+            display: block;
+        }
+        
+        .nutrition-info {
+            background: #f5f0eb;
+            padding: 12px;
+            border-radius: 8px;
+            font-size: 14px;
+            line-height: 1.5;
+            color: var(--green-dark);
+        }
+        
+        .prices-container {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 25px;
+            padding-top: 20px;
+            border-top: 2px dashed #d7ccc8;
+        }
+        
+        .price-item {
+            text-align: center;
+            flex: 1;
+            padding: 0 10px;
+        }
+        
+        .price-value {
+            font-size: 24px;
+            font-weight: bold;
+            color: var(--green);
+        }
+        
+        .price-volume {
+            font-size: 14px;
+            color: var(--green);
+            margin-top: 5px;
+            opacity: 0.8;
+        }
+        
+        .price-label {
+            font-size: 14px;
+            font-weight: 600;
+            color: var(--green-dark);
+            margin-bottom: 8px;
+        }
+
+        /* ========== ОТЗЫВЫ ========== */
+        .reviews-section {
+            padding: 80px 0;
+            background-color: var(--white);
+        }
+        
+        .review-form {
+            max-width: 600px;
+            margin: 0 auto;
+            background-color: var(--cream);
+            padding: 40px;
+            border-radius: 15px;
+            box-shadow: 0 5px 15px rgba(122, 155, 142, 0.1);
+        }
+        
+        .form-group {
+            margin-bottom: 25px;
+        }
+        
+        .form-label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 500;
+            color: var(--green-dark);
+        }
+        
+        .form-input,
+        .form-textarea {
+            width: 100%;
+            padding: 12px 15px;
+            border: 2px solid var(--green-light);
+            border-radius: 8px;
+            font-family: 'Montserrat', sans-serif;
+            font-size: 14px;
+            transition: var(--transition);
+            background-color: var(--white);
+            color: var(--green-dark);
+        }
+        
+        .form-input:focus,
+        .form-textarea:focus {
+            outline: none;
+            border-color: var(--green);
+            box-shadow: 0 0 0 3px rgba(122, 155, 142, 0.2);
+        }
+        
+        .form-textarea {
+            min-height: 120px;
+            resize: vertical;
+        }
+        
+        .form-row {
+            display: flex;
+            gap: 20px;
+        }
+        
+        .form-row .form-group {
+            flex: 1;
+        }
+        
+        .btn-submit-review {
+            width: 100%;
+            padding: 15px;
+            background-color: var(--green);
+            color: var(--white);
+            border: none;
+            border-radius: 8px;
+            font-family: 'Montserrat', sans-serif;
+            font-weight: 500;
+            font-size: 16px;
+            cursor: pointer;
+            transition: var(--transition);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+        
+        .btn-submit-review:hover {
+            background-color: var(--green-dark);
+            transform: translateY(-2px);
+        }
+
+        /* ========== ОПОВЕЩЕНИЯ ОТПРАВКИ ========== */
+        .notification {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            padding: 15px 25px;
+            border-radius: 10px;
+            color: white;
+            font-weight: 500;
+            z-index: 9999;
+            opacity: 0;
+            transform: translateY(-20px);
+            transition: all 0.3s ease;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            max-width: 400px;
+        }
+
+        .notification.show {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .notification.success {
+            background-color: #4CAF50;
+            border-left: 4px solid #2E7D32;
+        }
+
+        .notification.error {
+            background-color: #f44336;
+            border-left: 4px solid #c62828;
+        }
+
+        .notification.warning {
+            background-color: #ff9800;
+            border-left: 4px solid #ef6c00;
+        }
+
+        /* ========== КОНТАКТЫ С 3D ЧАШКОЙ ========== */
+        .contacts-section {
+            padding: 100px 0;
+            background-color: var(--cream);
+            position: relative;
+        }
+
+        .contacts-wrapper {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 80px;
+            align-items: center;
+            max-width: 1000px;
+            margin: 0 auto;
+        }
+
+        .contacts-info {
+            flex: 1;
+            min-width: 300px;
+        }
+
+        .coffee-cup-side {
+            flex: 1;
+            min-width: 300px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .contact-info {
+            display: flex;
+            flex-direction: column;
+            gap: 35px;
+        }
+        
+        .contact-item {
+            display: flex;
+            gap: 20px;
+            align-items: flex-start;
+        }
+        
+        .contact-item i {
+            font-size: 26px;
+            color: var(--green);
+            margin-top: 5px;
+            width: 30px;
+            text-align: center;
+        }
+        
+        .contact-item h4 {
+            margin-bottom: 8px;
+            font-weight: 600;
+            color: var(--green-dark);
+            font-size: 18px;
+        }
+        
+        .contact-item p {
+            color: var(--green-dark);
+            line-height: 1.5;
+        }
+        
+        .contact-item small {
+            color: var(--gray);
+            font-size: 14px;
+        }
+        
+        /* ========== НАДПИСЬ В ПРАВОМ НИЖНЕМ УГЛУ ПОД 3D-ЧАШКОЙ ========== */
+        .coffee-cup-container {
+            position: relative;
+            width: 500%;
+            max-width: 300px;
+            height: 200px;
+            margin: 0 auto;
+            perspective: 1000px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+        
+        .corner-message {
+            position: absolute;
+            bottom: 10px;
+            right: 1px;
+            max-width: 280px;
+            z-index: 20;
+            animation: fadeInCorner 0.8s ease-out 0.7s both;
+        }
+        
+        @keyframes fadeInCorner {
+            from {
+                opacity: 0;
+                transform: translateX(20px) translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateX(0) translateY(0);
+            }
+        }
+        
+        .message-content {
+            background: linear-gradient(135deg, 
+                rgba(93, 123, 111, 0.95) 0%, 
+                rgba(122, 155, 142, 0.95) 100%);
+            border-radius: 15px;
+            padding: 20px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.25),
+                        inset 0 0 0 1px rgba(255, 255, 255, 0.2);
+            backdrop-filter: blur(5px);
+            border: 1px solid rgba(255, 255, 255, 0.15);
+        }
+        
+        .message-heart {
+            text-align: center;
+            margin-bottom: 12px;
+        }
+        
+        .message-heart i {
+            font-size: 24px;
+            color: var(--cream);
+            filter: drop-shadow(0 2px 4px rgba(0,0,0,0.3));
+            animation: pulse 2s infinite;
+            text-shadow: 0 0 10px rgba(245, 241, 232, 0.5);
+        }
+        
+        .message-text {
+            text-align: center;
+        }
+        
+        .message-title {
+            font-family: 'Montserrat', sans-serif;
+            font-size: 18px;
+            font-weight: 700;
+            color: var(--white);
+            margin-bottom: 10px;
+            letter-spacing: 0.8px;
+            text-shadow: 0 1px 3px rgba(0,0,0,0.3);
+        }
+        
+        .message-quote {
+            font-family: 'Georgia', serif;
+            font-size: 15px;
+            font-weight: 400;
+            color: var(--cream);
+            line-height: 1.5;
+            font-style: italic;
+            opacity: 0.95;
+        }
+        
+        /* Эффект при наведении */
+        .corner-message:hover .message-content {
+            transform: scale(1.03);
+            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.35),
+                        inset 0 0 0 1px rgba(255, 255, 255, 0.3);
+            transition: all 0.3s ease;
+        }
+        
+        /* ========== ФУТЕР ========== */
+        .footer {
+            background-color: var(--green-dark);
+            color: var(--white);
+            padding: 60px 0 30px;
+        }
+        
+        .footer-content {
+            max-width: 800px;
+            margin: 0 auto 40px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 30px;
+        }
+        
+        .footer-logo .logo-main {
+            font-size: 32px;
+            color: var(--white);
+        }
+        
+        .footer-logo .logo-sub {
+            color: rgba(255,255,255,0.9);
+        }
+        
+        .footer-links {
+            display: flex;
+            gap: 30px;
+        }
+        
+        .footer-links a {
+            color: var(--white);
+            text-decoration: none;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            font-size: 14px;
+            transition: var(--transition);
+        }
+        
+        .footer-links a:hover {
+            color: var(--cream);
+        }
+        
+        .footer-social {
+            display: flex;
+            gap: 20px;
+        }
+        
+        .footer-social a {
+            color: var(--white);
+            font-size: 20px;
+            transition: var(--transition);
+        }
+        
+        .footer-social a:hover {
+            color: var(--cream);
+            transform: translateY(-3px);
+        }
+        
+        .footer-bottom {
+            text-align: center;
+            padding-top: 30px;
+            border-top: 1px solid rgba(255,255,255,0.2);
+            font-size: 14px;
+            color: rgba(255,255,255,0.8);
+        }
+        
+        /* ========== АДАПТИВНОСТЬ ========== */
+        @media (max-width: 768px) {
+            .menu-item {
+                flex-direction: column;
+            }
+            
+            .item-image {
+                width: 100%;
+                height: 200px;
+            }
+            
+            .footer-content {
+                flex-direction: column;
+                text-align: center;
+            }
+            
+            .nav-menu {
+                gap: 20px;
+            }
+            
+            .hero-logo .logo-main {
+                font-size: 40px;
+            }
+            
+            .hero-title {
+                font-size: 22px;
+            }
+            
+            .hero-subtitle {
+                font-size: 18px;
+            }
+            
+            .review-form {
+                padding: 30px 20px;
+            }
+            
+            .form-row {
+                flex-direction: column;
+                gap: 0;
+            }
+
+            .contacts-wrapper {
+                flex-direction: column;
+                gap: 50px;
+            }
+
+            .coffee-cup-container {
+                height: 350px;
+            }
+
+            .coffee-cup-3d {
+                transform: scale(0.9);
+            }
+            
+            .modal-card {
+                margin: 10px;
+            }
+            
+            .modal-content {
+                padding: 20px;
+            }
+            
+            .prices-container {
+                flex-direction: column;
+                gap: 20px;
+            }
+            
+            .menu-items {
+                gap: 20px;
+            }
+            
+            .coffee-cup-container {
+                height: 350px;
+                max-width: 250px;
+            }
+            
+            .corner-message {
+                position: relative;
+                bottom: auto;
+                right: auto;
+                max-width: 100%;
+                margin-top: 25px;
+                animation: none;
+            }
+            
+            .message-content {
+                padding: 18px;
+            }
+            
+            .message-title {
+                font-size: 17px;
+            }
+            
+            .message-quote {
+                font-size: 14px;
+            }
+            
+            /* AI адаптивность */
+            .ai-options {
+                grid-template-columns: 1fr;
+            }
+            
+            .recommended-product {
+                flex-direction: column;
+                text-align: center;
+            }
+            
+            .recommended-image {
+                width: 150px;
+                height: 150px;
+            }
+            
+            .rec-reasons li {
+                text-align: left;
+            }
+            
+            .result-actions {
+                flex-direction: column;
+            }
+            
+            .rec-action-btn {
+                width: 100%;
+            }
+            
+            .ai-step-navigation {
+                flex-direction: column;
+                gap: 15px;
+            }
+            
+            .ai-prev-btn, .ai-next-btn, .ai-submit-btn {
+                justify-content: center;
+            }
+
+            .notification {
+                left: 20px;
+                right: 20px;
+                max-width: none;
+            }
+        }
+        
+        @media (max-width: 480px) {
+            .hero-logo .logo-main {
+                font-size: 32px;
+            }
+            
+            .hero-title {
+                font-size: 18px;
+            }
+            
+            .hero-subtitle {
+                font-size: 16px;
+            }
+            
+            .section-title {
+                font-size: 28px;
+            }
+            
+            .category-filters {
+                gap: 10px;
+            }
+            
+            .filter-btn {
+                padding: 8px 15px;
+                font-size: 12px;
+            }
+            
+            .nav-menu {
+                gap: 15px;
+            }
+            
+            .nav-link {
+                font-size: 12px;
+            }
+
+            .coffee-cup-container {
+                height: 300px;
+                max-width: 250px;
+            }
+
+            .coffee-cup-3d {
+                transform: scale(0.8);
+            }
+
+            .contact-item {
+                gap: 15px;
+            }
+            
+            .contact-item i {
+                font-size: 22px;
+            }
+            
+            .modal-title {
+                font-size: 24px;
+            }
+            
+            .modal-header {
+                padding: 20px;
+            }
+            
+            .coffee-cup-container {
+                height: 300px;
+                max-width: 220px;
+            }
+            
+            .corner-message {
+                margin-top: 20px;
+            }
+            
+            .message-content {
+                padding: 15px;
+            }
+            
+            .message-title {
+                font-size: 16px;
+            }
+            
+            .message-quote {
+                font-size: 13px;
+            }
+            
+            .message-heart i {
+                font-size: 22px;
+            }
+            
+            /* AI адаптивность */
+            .ai-header h3 {
+                font-size: 24px;
+            }
+            
+            .ai-step h4 {
+                font-size: 18px;
+            }
+            
+            .option-icon {
+                width: 40px;
+                height: 40px;
+            }
+            
+            .option-icon i {
+                font-size: 16px;
+            }
+        }
+        /* ДОБАВЬТЕ ЭТО В КОНЕЦ CSS */
+.corner-message {
+    right: 0 !important;
+    bottom: 5px !important;
+}
+
+/* Анимация для подсветки товара */
+@keyframes highlightPulse {
+    0% { box-shadow: 0 5px 15px rgba(122, 155, 142, 0.1); }
+    50% { box-shadow: 0 5px 25px rgba(122, 155, 142, 0.4); }
+    100% { box-shadow: 0 5px 15px rgba(122, 155, 142, 0.1); }
+}
+    </style>
+    
+    <!-- Иконки Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <!-- Шрифт Montserrat -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+</head>
+<body>
+    <!-- УВЕДОМЛЕНИЯ -->
+    <div id="notification" class="notification" style="display: none;"></div>
+
+    <!-- ВЕРХНИЙ СЛАЙДЕР С АВТОСМЕНОЙ -->
+    <section class="top-banner-slider">
+        <div class="slider-container">
+            <!-- Первая картинка (1.jpg) -->
+            <div class="slide active">
+                <img src="1.jpg" alt="Кофейный дворик" class="slide-image">
+            </div>
+            
+            <!-- Вторая картинка (2.jpg) -->
+            <div class="slide">
+                <img src="2.jpg" alt="Кофейный дворик - интерьер" class="slide-image">
+            </div>
+            
+            <!-- Кнопки навигации -->
+            <button class="slider-btn prev-btn">
+                <i class="fas fa-chevron-left"></i>
+            </button>
+            <button class="slider-btn next-btn">
+                <i class="fas fa-chevron-right"></i>
+            </button>
+            
+            <!-- Точки-индикаторы -->
+            <div class="slider-dots">
+                <span class="dot active" data-slide="0"></span>
+                <span class="dot" data-slide="1"></span>
+            </div>
+        </div>
+    </section>
+
+    <!-- ШАПКА -->
+    <header class="header">
+        <div class="container">
+            <nav class="nav">
+                <!-- ЛОГОТИП -->
+                <div class="logo">
+                    <span class="logo-main">Кофейный дворик</span>
+                    <span class="logo-sub">Владикавказ</span>
+                </div>
+                
+                <!-- МЕНЮ -->
+                <div class="nav-menu">
+                    <a href="#menu" class="nav-link active">Меню</a>
+                    <a href="#reviews" class="nav-link">Отзывы</a>
+                    <a href="#contacts" class="nav-link">Контакты</a>
+                </div>
+                
+                <!-- ПУСТОЙ БЛОК ДЛЯ ВЫРАВНИВАНИЯ -->
+                <div style="width: 40px;"></div>
+            </nav>
+        </div>
+    </header>
+
+    <!-- ГЛАВНЫЙ БАННЕР -->
+    <section class="hero">
+        <div class="container">
+            <div class="hero-content">
+                <!-- ЛОГОТИП В ЦЕНТРЕ -->
+                <div class="hero-logo">
+                    <span class="logo-main">Кофейный дворик</span>
+                    <span class="logo-sub">Искусство в каждой чашке</span>
+                </div>
+                
+                <!-- ПРИВЕТСТВИЕ -->
+                <h1 class="hero-title">"Где каждый глоток — это история, а каждое мгновение — наслаждение"</h1>
+                
+                <!-- ПОДЗАГОЛОВОК -->
+                <p class="hero-subtitle">Откройте для себя волшебство свежеобжаренного кофе и домашней атмосферы</p>
+                
+                <!-- КНОПКА -->
+                <a href="#menu" class="btn-view-menu">
+                    <span>Исследовать меню</span>
+                    <i class="fas fa-mug-hot"></i>
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- МЕНЮ -->
+    <section id="menu" class="menu-section">
+        <div class="container">
+            <h2 class="section-title">Наше меню</h2>
+            
+            <!-- ФИЛЬТРЫ -->
+            <div class="category-filters">
+                <button class="filter-btn active" data-filter="all">Все</button>
+                <button class="filter-btn" data-filter="classic">Классический кофе</button>
+                <button class="filter-btn" data-filter="raf">Раф</button>
+                <button class="filter-btn" data-filter="cold">Холодный кофе</button>
+                <button class="filter-btn" data-filter="hot_chocolate">Какао и шоколад</button>
+                <button class="filter-btn" data-filter="tea">Чай</button>
+                <button class="filter-btn" data-filter="drinks">Напитки</button>
+                <button class="filter-btn" data-filter="salads">Салаты и закуски</button>
+                <button class="filter-btn" data-filter="desserts">Десерты</button>
+            </div>
+
+            <!-- AI-КОФЕЙНЫЙ ПОМОЩНИК -->
+            <div class="ai-recommendation-section">
+                <div class="ai-container">
+                    <div class="ai-header">
+                        <div class="ai-icon">
+                            <i class="fas fa-robot"></i>
+                            <div class="ai-pulse"></div>
+                        </div>
+                        <h3>Кофейный AI-помощник</h3>
+                        <p class="ai-subtitle">Ответьте на 3 вопроса и я подберу идеальный напиток из нашего меню</p>
+                    </div>
+                    
+                    <!-- Прогресс-бар -->
+                    <div class="ai-progress">
+                        <div class="ai-progress-bar" style="width: 33%"></div>
+                        <div class="ai-progress-steps">
+                            <span class="ai-step-dot active">1</span>
+                            <span class="ai-step-dot">2</span>
+                            <span class="ai-step-dot">3</span>
+                        </div>
+                    </div>
+                    
+                    <!-- Шаги визарда -->
+                    <div class="ai-wizard" id="aiWizard">
+                        <!-- Шаг 1: Настроение -->
+                        <div class="ai-step active" data-step="1">
+                            <h4><span class="step-number">01</span> Какое у вас сегодня настроение?</h4>
+                            <p class="step-description">Это поможет понять, какой напиток вам подойдет</p>
+                            
+                            <div class="ai-options">
+                                <button class="ai-option" data-value="energetic">
+                                    <div class="option-icon">
+                                        <i class="fas fa-bolt"></i>
+                                    </div>
+                                    <div class="option-content">
+                                        <span class="option-title">Бодрое</span>
+                                        <span class="option-desc">Нужен заряд энергии</span>
+                                    </div>
+                                    <div class="option-check">
+                                        <i class="fas fa-check"></i>
+                                    </div>
+                                </button>
+                                
+                                <button class="ai-option" data-value="relaxed">
+                                    <div class="option-icon">
+                                        <i class="fas fa-couch"></i>
+                                    </div>
+                                    <div class="option-content">
+                                        <span class="option-title">Расслабленное</span>
+                                        <span class="option-desc">Хочу отдохнуть и насладиться</span>
+                                    </div>
+                                    <div class="option-check">
+                                        <i class="fas fa-check"></i>
+                                    </div>
+                                </button>
+                                
+                                <button class="ai-option" data-value="creative">
+                                    <div class="option-icon">
+                                        <i class="fas fa-palette"></i>
+                                    </div>
+                                    <div class="option-content">
+                                        <span class="option-title">Творческое</span>
+                                        <span class="option-desc">Ищу вдохновение</span>
+                                    </div>
+                                    <div class="option-check">
+                                        <i class="fas fa-check"></i>
+                                    </div>
+                                </button>
+                                
+                                <button class="ai-option" data-value="focused">
+                                    <div class="option-icon">
+                                        <i class="fas fa-bullseye"></i>
+                                    </div>
+                                    <div class="option-content">
+                                        <span class="option-title">Сосредоточенное</span>
+                                        <span class="option-desc">Нужна концентрация</span>
+                                    </div>
+                                    <div class="option-check">
+                                        <i class="fas fa-check"></i>
+                                    </div>
+                                </button>
+                            </div>
+                            
+                            <div class="ai-step-navigation">
+                                <button class="ai-next-btn" disabled>
+                                    Далее <i class="fas fa-arrow-right"></i>
+                                </button>
+                            </div>
+                        </div>
+                        
+                        <!-- Шаг 2: Время суток -->
+                        <div class="ai-step" data-step="2">
+                            <h4><span class="step-number">02</span> Какое сейчас время суток?</h4>
+                            <p class="step-description">Разные напитки подходят для разного времени</p>
+                            
+                            <div class="ai-options">
+                                <button class="ai-option" data-value="morning">
+                                    <div class="option-icon">
+                                        <i class="fas fa-sun"></i>
+                                    </div>
+                                    <div class="option-content">
+                                        <span class="option-title">Утро</span>
+                                        <span class="option-desc">8:00 - 12:00</span>
+                                    </div>
+                                    <div class="option-check">
+                                        <i class="fas fa-check"></i>
+                                    </div>
+                                </button>
+                                
+                                <button class="ai-option" data-value="day">
+                                    <div class="option-icon">
+                                        <i class="fas fa-cloud-sun"></i>
+                                    </div>
+                                    <div class="option-content">
+                                        <span class="option-title">День</span>
+                                        <span class="option-desc">12:00 - 17:00</span>
+                                    </div>
+                                    <div class="option-check">
+                                        <i class="fas fa-check"></i>
+                                    </div>
+                                </button>
+                                
+                                <button class="ai-option" data-value="evening">
+                                    <div class="option-icon">
+                                        <i class="fas fa-moon"></i>
+                                    </div>
+                                    <div class="option-content">
+                                        <span class="option-title">Вечер</span>
+                                        <span class="option-desc">17:00 - 20:00</span>
+                                    </div>
+                                    <div class="option-check">
+                                        <i class="fas fa-check"></i>
+                                    </div>
+                                </button>
+                                
+                                <button class="ai-option" data-value="night">
+                                    <div class="option-icon">
+                                        <i class="fas fa-star"></i>
+                                    </div>
+                                    <div class="option-content">
+                                        <span class="option-title">Ночь</span>
+                                        <span class="option-desc">20:00 - 8:00</span>
+                                    </div>
+                                    <div class="option-check">
+                                        <i class="fas fa-check"></i>
+                                    </div>
+                                </button>
+                            </div>
+                            
+                            <div class="ai-step-navigation">
+                                <button class="ai-prev-btn">
+                                    <i class="fas fa-arrow-left"></i> Назад
+                                </button>
+                                <button class="ai-next-btn" disabled>
+                                    Далее <i class="fas fa-arrow-right"></i>
+                                </button>
+                            </div>
+                        </div>
+                        
+                        <!-- Шаг 3: Предпочтения -->
+                        <div class="ai-step" data-step="3">
+                            <h4><span class="step-number">03</span> Что вы предпочитаете?</h4>
+                            <p class="step-description">Выберите ваш вкусовой профиль</p>
+                            
+                            <div class="ai-options">
+                                <button class="ai-option" data-value="classic">
+                                    <div class="option-icon">
+                                        <i class="fas fa-coffee"></i>
+                                    </div>
+                                    <div class="option-content">
+                                        <span class="option-title">Классику</span>
+                                        <span class="option-desc">Чистый вкус кофе</span>
+                                    </div>
+                                    <div class="option-check">
+                                        <i class="fas fa-check"></i>
+                                    </div>
+                                </button>
+                                
+                                <button class="ai-option" data-value="sweet">
+                                    <div class="option-icon">
+                                        <i class="fas fa-candy-cane"></i>
+                                    </div>
+                                    <div class="option-content">
+                                        <span class="option-title">Сладкое</span>
+                                        <span class="option-desc">С сиропами и добавками</span>
+                                    </div>
+                                    <div class="option-check">
+                                        <i class="fas fa-check"></i>
+                                    </div>
+                                </button>
+                                
+                                <button class="ai-option" data-value="cold">
+                                    <div class="option-icon">
+                                        <i class="fas fa-snowflake"></i>
+                                    </div>
+                                    <div class="option-content">
+                                        <span class="option-title">Холодное</span>
+                                        <span class="option-desc">Освежающие напитки</span>
+                                    </div>
+                                    <div class="option-check">
+                                        <i class="fas fa-check"></i>
+                                    </div>
+                                </button>
+                                
+                                <button class="ai-option" data-value="healthy">
+                                    <div class="option-icon">
+                                        <i class="fas fa-heart"></i>
+                                    </div>
+                                    <div class="option-content">
+                                        <span class="option-title">Полезное</span>
+                                        <span class="option-desc">С акцентом на пользу</span>
+                                    </div>
+                                    <div class="option-check">
+                                        <i class="fas fa-check"></i>
+                                    </div>
+                                </button>
+                            </div>
+                            
+                            <div class="ai-step-navigation">
+                                <button class="ai-prev-btn">
+                                    <i class="fas fa-arrow-left"></i> Назад
+                                </button>
+                                <button class="ai-submit-btn" disabled>
+                                    <i class="fas fa-magic"></i> Получить рекомендацию
+                                </button>
+                            </div>
+                        </div>
+                        
+                        <!-- Результат -->
+                        <div class="ai-result" id="aiResult">
+                            <div class="result-header">
+                                <div class="result-icon">
+                                    <i class="fas fa-trophy"></i>
+                                </div>
+                                <h3>Идеальный выбор для вас!</h3>
+                                <p class="result-subtitle">На основе ваших ответов AI рекомендует:</p>
+                            </div>
+                            
+                            <div class="recommended-product">
+                                <div class="recommended-image">
+                                    <img src="" alt="" id="recImage">
+                                </div>
+                                <div class="recommended-info">
+                                    <h4 id="recTitle">Название напитка</h4>
+                                    <p class="rec-description" id="recDesc">Описание напитка</p>
+                                    <div class="rec-price" id="recPrice">Цена</div>
+                                    <div class="rec-reasons" id="recReasons">
+                                        <h5>Почему этот напиток:</h5>
+                                        <ul id="recReasonsList"></ul>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div class="result-actions">
+                                <button class="rec-action-btn" id="recOrderBtn">
+                                    <i class="fas fa-shopping-cart"></i> Заказать сейчас
+                                </button>
+                                <button class="rec-action-btn secondary" id="recShowBtn">
+                                    <i class="fas fa-eye"></i> Показать в меню
+                                </button>
+                                <button class="rec-action-btn outline" id="recRestartBtn">
+                                    <i class="fas fa-redo"></i> Пройти заново
+                                </button>
+                            </div>
+                            
+                            <div class="result-footer">
+                                <p><i class="fas fa-lightbulb"></i> <strong>Интересный факт:</strong> <span id="recFact">Факт о кофе</span></p>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="ai-footer">
+                        <p><i class="fas fa-brain"></i> AI анализирует более 50 параметров для идеальной рекомендации</p>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- ТОВАРЫ -->
+            <div class="menu-items">
+                <!-- КЛАССИЧЕСКИЙ КОФЕ -->
+                <div class="menu-item" data-category="classic" data-card="espresso">
+                    <div class="item-image">
+                        <img src="5.jpg" alt="Эспрессо">
+                    </div>
+                    <div class="item-info">
+                        <h3 class="item-title">Эспрессо</h3>
+                        <p class="item-desc">Классический крепкий кофе</p>
+                        <div class="item-price">125 ₽ / 150 ₽</div>
+                    </div>
+                </div>
+                
+                <div class="menu-item" data-category="classic" data-card="americano">
+                    <div class="item-image">
+                        <img src="6.jpg" alt="Американо">
+                    </div>
+                    <div class="item-info">
+                        <h3 class="item-title">Американо</h3>
+                        <p class="item-desc">Классический черный кофе</p>
+                        <div class="item-price">150 ₽ / 200 ₽</div>
+                    </div>
+                </div>
+                
+                <div class="menu-item" data-category="classic" data-card="latte">
+                    <div class="item-image">
+                        <img src="4.jpg" alt="Латте">
+                    </div>
+                    <div class="item-info">
+                        <h3 class="item-title">Латте</h3>
+                        <p class="item-desc">Нежный кофе с молоком</p>
+                        <div class="item-price">175 ₽ / 250 ₽</div>
+                    </div>
+                </div>
+                
+                <div class="menu-item" data-category="classic" data-card="cappuccino">
+                    <div class="item-image">
+                        <img src="3.jpg" alt="Капучино">
+                    </div>
+                    <div class="item-info">
+                        <h3 class="item-title">Капучино</h3>
+                        <p class="item-desc">С воздушной молочной пенкой</p>
+                        <div class="item-price">175 ₽ / 250 ₽</div>
+                    </div>
+                </div>
+                
+                <div class="menu-item" data-category="classic" data-card="flat_white">
+                    <div class="item-image">
+                        <img src="7.jpg" alt="Флэт уайт">
+                    </div>
+                    <div class="item-info">
+                        <h3 class="item-title">Флэт уайт</h3>
+                        <p class="item-desc">Австралийский вариант латте</p>
+                        <div class="item-price">225 ₽</div>
+                    </div>
+                </div>
+                
+                <div class="menu-item" data-category="classic" data-card="mochaccino">
+                    <div class="item-image">
+                        <img src="8.jpg" alt="Моккачино">
+                    </div>
+                    <div class="item-info">
+                        <h3 class="item-title">Моккачино</h3>
+                        <p class="item-desc">Кофе с шоколадом и молоком</p>
+                        <div class="item-price">225 ₽ / 275 ₽</div>
+                    </div>
+                </div>
+                
+                <div class="menu-item" data-category="classic" data-card="sand_coffee">
+                    <div class="item-image">
+                        <img src="10.jpg" alt="Кофе на песке">
+                    </div>
+                    <div class="item-info">
+                        <h3 class="item-title">Кофе на песке</h3>
+                        <p class="item-desc">Традиционный восточный кофе,
+                            Колумбия / Ирландский крем
+                        </p>
+                        <div class="item-price">150 ₽ / 200 ₽</div>
+                    </div>
+                </div>
+                
+                <!-- КАКАО И ГОРЯЧИЙ ШОКОЛАД -->
+                <div class="menu-item" data-category="hot_chocolate" data-card="cocoa">
+                    <div class="item-image">
+                        <img src="9.jpg" alt="Какао">
+                    </div>
+                    <div class="item-info">
+                        <h3 class="item-title">Какао</h3>
+                        <p class="item-desc">Традиционный горячий какао</p>
+                        <div class="item-price">175 ₽ / 250 ₽</div>
+                    </div>
+                </div>
+                
+                <div class="menu-item" data-category="hot_chocolate" data-card="hot_chocolate">
+                    <div class="item-image">
+                        <img src="11.jpg" alt="Горячий шоколад">
+                    </div>
+                    <div class="item-info">
+                        <h3 class="item-title">Горячий шоколад</h3>
+                        <p class="item-desc">Насыщенный шоколадный напиток</p>
+                        <div class="item-price">225 ₽ / 275 ₽</div>
+                    </div>
+                </div>
+                
+                <!-- РАФ -->
+                <div class="menu-item" data-category="raf" data-card="classic_raf">
+                    <div class="item-image">
+                        <img src="13.jpg" alt="Классический Раф">
+                    </div>
+                    <div class="item-info">
+                        <h3 class="item-title">Классический Раф</h3>
+                        <p class="item-desc">Кофе со сливками и ванилью</p>
+                        <div class="item-price">225 ₽ / 260 ₽</div>
+                    </div>
+                </div>
+                
+                <div class="menu-item" data-category="raf" data-card="raspberry_raf">
+                    <div class="item-image">
+                        <img src="12.jpg" alt="Малиновый Раф">
+                    </div>
+                    <div class="item-info">
+                        <h3 class="item-title">Малиновый Раф</h3>
+                        <p class="item-desc">С малиновым сиропом и сливками</p>
+                        <div class="item-price">250 ₽ / 275 ₽</div>
+                    </div>
+                </div>
+                
+                <div class="menu-item" data-category="raf" data-card="pistachio_raf">
+                    <div class="item-image">
+                        <img src="14.jpg" alt="Фисташковый Раф">
+                    </div>
+                    <div class="item-info">
+                        <h3 class="item-title">Фисташковый Раф</h3>
+                        <p class="item-desc">С фисташковым сиропом</p>
+                        <div class="item-price">240 ₽ / 275 ₽</div>
+                    </div>
+                </div>
+                
+                <div class="menu-item" data-category="raf" data-card="blueberry_raf">
+                    <div class="item-image">
+                        <img src="15.jpg" alt="Черничное небо">
+                    </div>
+                    <div class="item-info">
+                        <h3 class="item-title">Черничное небо</h3>
+                        <p class="item-desc">С черничным сиропом</p>
+                        <div class="item-price">240 ₽ / 275 ₽</div>
+                    </div>
+                </div>
+                
+                <div class="menu-item" data-category="raf" data-card="urban_raf">
+                    <div class="item-image">
+                        <img src="21.jpg" alt="Раф с урбечем">
+                    </div>
+                    <div class="item-info">
+                        <h3 class="item-title">Раф с урбечем</h3>
+                        <p class="item-desc"> Кофейно‑ореховая смесь</p>
+                        <div class="item-price">240 ₽ / 275 ₽</div>
+                    </div>
+                </div>
+                
+                <!-- ХОЛОДНЫЙ КОФЕ -->
+                <div class="menu-item" data-category="cold" data-card="cold_raf">
+                    <div class="item-image">
+                        <img src="25.jpg" alt="Холодный Раф">
+                    </div>
+                    <div class="item-info">
+                        <h3 class="item-title">Холодный Раф</h3>
+                        <p class="item-desc">350 мл, охлажденный вариант</p>
+                        <div class="item-price">260 ₽</div>
+                    </div>
+                </div>
+                
+                <div class="menu-item" data-category="cold" data-card="cold_latte">
+                    <div class="item-image">
+                        <img src="26.jpg" alt="Холодный Латте">
+                    </div>
+                    <div class="item-info">
+                        <h3 class="item-title">Холодный Латте</h3>
+                        <p class="item-desc">350 мл, с молоком и льдом</p>
+                        <div class="item-price">250 ₽</div>
+                    </div>
+                </div>
+                
+                <div class="menu-item" data-category="cold" data-card="cold_americano">
+                    <div class="item-image">
+                        <img src="27.jpg" alt="Холодный Американо">
+                    </div>
+                    <div class="item-info">
+                        <h3 class="item-title">Холодный Американо</h3>
+                        <p class="item-desc">350 мл, с кубиками льда</p>
+                        <div class="item-price">200 ₽</div>
+                    </div>
+                </div>
+                
+                <!-- ЧАЙ -->
+                <div class="menu-item" data-category="tea" data-card="assam_tea">
+                    <div class="item-image">
+                        <img src="16.jpg" alt="Чай Ассам">
+                    </div>
+                    <div class="item-info">
+                        <h3 class="item-title">Ассам</h3>
+                        <p class="item-desc">Классический чёрный чай</p>
+                        <div class="item-price">120 ₽ / 150 ₽</div>
+                    </div>
+                </div>
+                
+                <div class="menu-item" data-category="tea" data-card="sencha_tea">
+                    <div class="item-image">
+                        <img src="20.jpg" alt="Чай Сенча">
+                    </div>
+                    <div class="item-info">
+                        <h3 class="item-title">Сенча</h3>
+                        <p class="item-desc">Японский зелёный чай</p>
+                        <div class="item-price">120 ₽ / 150 ₽</div>
+                    </div>
+                </div>
+                
+                <div class="menu-item" data-category="tea" data-card="mountain_tea">
+                    <div class="item-image">
+                        <img src="23.jpg" alt="Горный чай">
+                    </div>
+                    <div class="item-info">
+                        <h3 class="item-title">Горный</h3>
+                        <p class="item-desc">Ароматный горный чай</p>
+                        <div class="item-price">150 ₽ / 175 ₽</div>
+                    </div>
+                </div>
+                
+                <div class="menu-item" data-category="tea" data-card="jasmine_tea">
+                    <div class="item-image">
+                        <img src="22.jpg" alt="Жасминовый чай">
+                    </div>
+                    <div class="item-info">
+                        <h3 class="item-title">Жасмин</h3>
+                        <p class="item-desc">Чай с цветами жасмина</p>
+                        <div class="item-price">150 ₽ / 175 ₽</div>
+                    </div>
+                </div>
+                
+                <div class="menu-item" data-category="tea" data-card="raspberry_tea">
+                    <div class="item-image">
+                        <img src="17.jpg" alt="Малиновый чай">
+                    </div>
+                    <div class="item-info">
+                        <h3 class="item-title">Малина</h3>
+                        <p class="item-desc">Фруктовый чай с малиной</p>
+                        <div class="item-price">150 ₽ / 180 ₽</div>
+                    </div>
+                </div>
+                
+                <div class="menu-item" data-category="tea" data-card="sea_buckthorn_tea">
+                    <div class="item-image">
+                        <img src="18.jpg" alt="Облепиховый чай">
+                    </div>
+                    <div class="item-info">
+                        <h3 class="item-title">Облепиха</h3>
+                        <p class="item-desc">Чай с облепихой</p>
+                        <div class="item-price">150 ₽ / 180 ₽</div>
+                    </div>
+                </div>
+                
+                <!-- ФИРМЕННЫЙ ЧАЙ -->
+                <div class="menu-item" data-category="tea" data-card="orange_ginger_tea">
+                    <div class="item-image">
+                        <img src="19.jpg" alt="Апельсин-имбирь">
+                    </div>
+                    <div class="item-info">
+                        <h3 class="item-title">Апельсин-имбирь</h3>
+                        <p class="item-desc">Фирменный чай</p>
+                        <div class="item-price">200 ₽</div>
+                    </div>
+                </div>
+                
+                <div class="menu-item" data-category="tea" data-card="mountain_sea_buckthorn_tea">
+                    <div class="item-image">
+                        <img src="24.jpg" alt="Горный с облепихой">
+                    </div>
+                    <div class="item-info">
+                        <h3 class="item-title">Горный с облепихой</h3>
+                        <p class="item-desc">Фирменный чай</p>
+                        <div class="item-price">175 ₽</div>
+                    </div>
+                </div>
+                
+                <!-- НАПИТКИ (ФРЕШИ И ЛИМОНАДЫ) -->
+                <div class="menu-item" data-category="drinks" data-card="orange_fresh">
+                    <div class="item-image">
+                        <img src="28.jpg" alt="Апельсиновый фреш">
+                    </div>
+                    <div class="item-info">
+                        <h3 class="item-title">Апельсин (фреш)</h3>
+                        <p class="item-desc">Свежевыжатый апельсиновый сок</p>
+                        <div class="item-price">275 ₽ / 375 ₽</div>
+                    </div>
+                </div>
+                
+                <div class="menu-item" data-category="drinks" data-card="grapefruit_fresh">
+                    <div class="item-image">
+                        <img src="29.jpg" alt="Грейпфрутовый фреш">
+                    </div>
+                    <div class="item-info">
+                        <h3 class="item-title">Грейпфрут (фреш)</h3>
+                        <p class="item-desc">Свежевыжатый грейпфрутовый сок</p>
+                        <div class="item-price">275 ₽ / 375 ₽</div>
+                    </div>
+                </div>
+                
+                <div class="menu-item" data-category="drinks" data-card="raspberry_lemonade">
+                    <div class="item-image">
+                        <img src="32.jpg" alt="Малиновый лимонад">
+                    </div>
+                    <div class="item-info">
+                        <h3 class="item-title">Малиновый грейп (лимонад)</h3>
+                        <p class="item-desc">Освежающий лимонад</p>
+                        <div class="item-price">350 ₽</div>
+                    </div>
+                </div>
+                
+                <div class="menu-item" data-category="drinks" data-card="tropical_lemonade">
+                    <div class="item-image">
+                        <img src="31.jpg" alt="Тропический лимонад">
+                    </div>
+                    <div class="item-info">
+                        <h3 class="item-title">Тропический взрыв (лимонад)</h3>
+                        <p class="item-desc">Лимонад с тропическими фруктами</p>
+                        <div class="item-price">350 ₽</div>
+                    </div>
+                </div>
+                
+                <div class="menu-item" data-category="drinks" data-card="blue_castle_lemonade">
+                    <div class="item-image">
+                        <img src="30.jpg" alt="Синий замок">
+                    </div>
+                    <div class="item-info">
+                        <h3 class="item-title">Синий замок (лимонад)</h3>
+                        <p class="item-desc">Яркий синий лимонад</p>
+                        <div class="item-price">350 ₽</div>
+                    </div>
+                </div>
+                
+                <!-- САЛАТЫ И ЗАКУСКИ -->
+                <div class="menu-item" data-category="salads" data-card="chicken_bowl">
+                    <div class="item-image">
+                        <img src="52.jpg" alt="Боул с курицей">
+                    </div>
+                    <div class="item-info">
+                        <h3 class="item-title">Боул с курицей</h3>
+                        <p class="item-desc">Свежие овощи, куриное филе, соус</p>
+                        <div class="item-price">330 ₽</div>
+                    </div>
+                </div>
+                
+                <div class="menu-item" data-category="salads" data-card="shrimp_bowl">
+                    <div class="item-image">
+                        <img src="51.jpg" alt="Боул с креветкой">
+                    </div>
+                    <div class="item-info">
+                        <h3 class="item-title">Боул с креветкой</h3>
+                        <p class="item-desc">Креветки, авокадо, руккола, соус</p>
+                        <div class="item-price">350 ₽</div>
+                    </div>
+                </div>
+                
+                <div class="menu-item" data-category="salads" data-card="pepperoni_sandwich">
+                    <div class="item-image">
+                        <img src="35.jpg" alt="Сэндвич Пеперони">
+                    </div>
+                    <div class="item-info">
+                        <h3 class="item-title">Сэндвич Пеперони</h3>
+                        <p class="item-desc">Пеперони, сыр, соус, свежие овощи</p>
+                        <div class="item-price">280 ₽</div>
+                    </div>
+                </div>
+                
+                <div class="menu-item" data-category="salads" data-card="turkey_sandwich">
+                    <div class="item-image">
+                        <img src="33.jpg" alt="Сэндвич Индейка">
+                    </div>
+                    <div class="item-info">
+                        <h3 class="item-title">Сэндвич Индейка</h3>
+                        <p class="item-desc">Индейка, сыр, салат, помидоры</p>
+                        <div class="item-price">280 ₽</div>
+                    </div>
+                </div>
+                
+                <div class="menu-item" data-category="salads" data-card="chicken_sandwich">
+                    <div class="item-image">
+                        <img src="34.jpg" alt="Сэндвич Курица">
+                    </div>
+                    <div class="item-info">
+                        <h3 class="item-title">Сэндвич Курица</h3>
+                        <p class="item-desc">Куриное филе, сыр, овощи, соус</p>
+                        <div class="item-price">280 ₽</div>
+                    </div>
+                </div>
+                
+                <div class="menu-item" data-category="salads" data-card="turkey_ciabatta">
+                    <div class="item-image">
+                        <img src="36.jpg" alt="Чиабатта с индейкой">
+                    </div>
+                    <div class="item-info">
+                        <h3 class="item-title">Чиабатта с индейкой</h3>
+                        <p class="item-desc">На итальянском хлебе с соусом</p>
+                        <div class="item-price">330 ₽</div>
+                    </div>
+                </div>
+                
+                <div class="menu-item" data-category="salads" data-card="beef_ciabatta">
+                    <div class="item-image">
+                        <img src="37.jpg" alt="Чиабатта с говядиной">
+                    </div>
+                    <div class="item-info">
+                        <h3 class="item-title">Чиабатта с говядиной</h3>
+                        <p class="item-desc">Нежная говядина с овощами</p>
+                        <div class="item-price">350 ₽</div>
+                    </div>
+                </div>
+                
+                <div class="menu-item" data-category="salads" data-card="chicken_ymster">
+                    <div class="item-image">
+                        <img src="40.jpg" alt="Ямстер с курицей">
+                    </div>
+                    <div class="item-info">
+                        <h3 class="item-title">Ямстер с курицей</h3>
+                        <p class="item-desc">Сытная закуска с куриным филе</p>
+                        <div class="item-price">260 ₽</div>
+                    </div>
+                </div>
+                
+                <div class="menu-item" data-category="salads" data-card="turkey_ymster">
+                    <div class="item-image">
+                        <img src="39.jpg" alt="Ямстер с индейкой">
+                    </div>
+                    <div class="item-info">
+                        <h3 class="item-title">Ямстер с индейкой</h3>
+                        <p class="item-desc">С индейкой и свежими овощами</p>
+                        <div class="item-price">260 ₽</div>
+                    </div>
+                </div>
+                
+                <div class="menu-item" data-category="salads" data-card="pepperoni_ymster">
+                    <div class="item-image">
+                        <img src="38.jpg" alt="Ямстер с пеперони">
+                    </div>
+                    <div class="item-info">
+                        <h3 class="item-title">Ямстер с пеперони</h3>
+                        <p class="item-desc">Острая закуска с колбаской</p>
+                        <div class="item-price">260 ₽</div>
+                    </div>
+                </div>
+                
+                <!-- ДЕСЕРТЫ -->
+                <div class="menu-item" data-category="desserts" data-card="cheesecake">
+                    <div class="item-image">
+                        <img src="dessert1.jpg" alt="Чизкейк">
+                    </div>
+                    <div class="item-info">
+                        <h3 class="item-title">Чизкейк</h3>
+                        <p class="item-desc">Нежный десерт с ягодным соусом</p>
+                        <div class="item-price">285 ₽</div>
+                    </div>
+                </div>
+                
+                <div class="menu-item" data-category="desserts" data-card="honey_cake">
+                    <div class="item-image">
+                        <img src="dessert2.jpg" alt="Медовик">
+                    </div>
+                    <div class="item-info">
+                        <h3 class="item-title">Медовик</h3>
+                        <p class="item-desc">Классический медовый торт</p>
+                        <div class="item-price">280 ₽</div>
+                    </div>
+                </div>
+                
+                <div class="menu-item" data-category="desserts" data-card="trifle">
+                    <div class="item-image">
+                        <img src="dessert3.jpg" alt="Трайфл">
+                    </div>
+                    <div class="item-info">
+                        <h3 class="item-title">Трайфл</h3>
+                        <p class="item-desc">Многослойный десерт с ягодами</p>
+                        <div class="item-price">325 ₽</div>
+                    </div>
+                </div>
+                
+                <div class="menu-item" data-category="desserts" data-card="pp_cheesecakes">
+                    <div class="item-image">
+                        <img src="53.jpg" alt="Сырники ПП">
+                    </div>
+                    <div class="item-info">
+                        <h3 class="item-title">Сырники ПП с вареньем</h3>
+                        <p class="item-desc">Диетические с малиновым вареньем</p>
+                        <div class="item-price">270 ₽</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- МОДАЛЬНОЕ ОКНО КАРТОЧКИ (скрыто по умолчанию) -->
+    <div class="modal-overlay" id="productModal">
+        <div class="modal-card">
+            <div class="modal-header">
+                <div class="modal-title" id="modalProductTitle">Классика</div>
+                <button class="modal-close" id="modalClose">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            <div class="modal-content">
+                <div class="modal-section">
+                    <span class="section-label">Описание:</span>
+                    <div class="nutrition-info" id="modalDescription">
+                        Пищевая ценность: к - 24,1 б - 1,6; ж - 17; у - 0,5
+                    </div>
+                </div>
+                
+                <div class="modal-section">
+                    <span class="section-label">Ингредиенты:</span>
+                    <div id="modalIngredients">
+                        Кофе, вода, сахар (по желанию)
+                    </div>
+                </div>
+                
+                <div class="prices-container">
+                    <div class="price-item">
+                        <div class="price-label">Стандартный</div>
+                        <div class="price-value">220 ₽</div>
+                        <div class="price-volume">200 мл</div>
+                    </div>
+                    <div class="price-item">
+                        <div class="price-label">Большой</div>
+                        <div class="price-value">280 ₽</div>
+                        <div class="price-volume">350 мл</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- ОТЗЫВЫ -->
+    <section id="reviews" class="reviews-section">
+        <div class="container">
+            <h2 class="section-title">Ваши отзывы и предложения</h2>
+            <p style="text-align: center; margin-bottom: 40px; color: var(--gray); max-width: 600px; margin-left: auto; margin-right: auto;">
+                Поделитесь своим мнением о нашей кофейне. Ваши отзывы помогают нам становиться лучше!
+            </p>
+            
+            <div class="review-form">
+                <div class="form-row">
+                    <div class="form-group">
+                        <label class="form-label" for="name">Ваше имя *</label>
+                        <input type="text" id="name" class="form-input" placeholder="Как к вам обращаться?" required>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label" for="email">Email (необязательно)</label>
+                        <input type="email" id="email" class="form-input" placeholder="Для обратной связи">
+                    </div>
+                </div>
+                
+                <div class="form-group">
+                    <label class="form-label" for="review-type">Тип обращения</label>
+                    <select id="review-type" class="form-input">
+                        <option value="review">Отзыв о посещении</option>
+                        <option value="suggestion">Предложение по меню</option>
+                        <option value="improvement">Идея для улучшения</option>
+                        <option value="other">Другое</option>
+                    </select>
+                </div>
+                
+                <div class="form-group">
+                    <label class="form-label" for="message">Ваше сообщение *</label>
+                    <textarea id="message" class="form-textarea" placeholder="Расскажите о вашем опыте, предложениях по кофейне, пожеланиях к меню или обслуживанию..." required></textarea>
+                </div>
+                
+                <div class="form-group">
+                    <label class="form-label" for="rating">Оценка (от 1 до 5)</label>
+                    <input type="range" id="rating" class="form-input" min="1" max="5" value="5">
+                    <div style="display: flex; justify-content: space-between; margin-top: 5px; font-size: 12px; color: var(--gray);">
+                        <span>1 - Плохо</span>
+                        <span>2</span>
+                        <span>3 - Нормально</span>
+                        <span>4</span>
+                        <span>5 - Отлично</span>
+                    </div>
+                </div>
+                
+                <button class="btn-submit-review" id="submit-review">
+                    <i class="fas fa-paper-plane"></i> Отправить отзыв в Telegram
+                </button>
+            </div>
+        </div>
+    </section>
+
+    <!-- КОНТАКТЫ С 3D ЧАШКОЙ -->
+    <section id="contacts" class="contacts-section">
+        <div class="container">
+            <h2 class="section-title">Где нас найти</h2>
+            
+            <div class="contacts-wrapper">
+                <div class="contacts-info">
+                    <div class="contact-info">
+                        <!-- АДРЕС -->
+                        <div class="contact-item">
+                            <i class="fas fa-map-marker-alt"></i>
+                            <div>
+                                <h4>Адрес</h4>
+                                <p>Владикавказ, ул. Колка Кесаева, 8</p>
+                                <small>Рядом с Осетинским театром</small>
+                            </div>
+                        </div>
+                        
+                        <!-- ЧАСЫ РАБОТЫ -->
+                        <div class="contact-item">
+                            <i class="fas fa-clock"></i>
+                            <div>
+                                <h4>Часы работы</h4>
+                                <p>Пн-Сб: 8:00 - 20:00</p>
+                                <p>Вс: 9:00 - 20:00</p>
+                            </div>
+                        </div>
+                        
+                        <!-- ИНСТАГРАМ -->
+                        <div class="contact-item">
+                            <i class="fab fa-instagram"></i>
+                            <div>
+                                <h4>Instagram</h4>
+                                <p>@coffee_dvorik</p>
+                                <small>Следите за нашими новостями и акциями</small>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="coffee-cup-side">
+                    <div class="coffee-cup-container">
+                        <div class="coffee-cup-3d">
+                            <div class="cup"></div>
+                            <div class="coffee"></div>
+                            <div class="foam"></div>
+                            <div class="handle"></div>
+                            <div class="saucer"></div>
+                            <div class="reflection"></div>
+                            <div class="steam"></div>
+                            <div class="steam"></div>
+                            <div class="steam"></div>
+                            <div class="coffee-bean"></div>
+                            <div class="coffee-bean"></div>
+                            <div class="coffee-bean"></div>
+                        </div>
+                        
+                        <!-- НАДПИСЬ В ПРАВОМ НИЖНЕМ УГЛУ ПОД 3D-ЧАШКОЙ -->
+                        <div class="corner-message" style="right: 500px; bottom: 100px;">
+                            <div class="message-content">
+                                <div class="message-heart">
+                                    <i class="fas fa-heart"></i>
+                                </div>
+                                <div class="message-text">
+                                    <p class="message-title">Как вы сблизились?</p>
+                                    <p class="message-quote">Она любила кофе, а я — её история,<br>которая началась в том самом дворике...</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ФУТЕР -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <!-- ЛОГО -->
+                <div class="footer-logo">
+                    <span class="logo-main">Кофейный дворик</span>
+                    <span class="logo-sub">Владикавказ</span>
+                </div>
+                
+                <!-- ССЫЛКИ -->
+                <div class="footer-links">
+                    <a href="#menu">Меню</a>
+                    <a href="#reviews">Отзывы</a>
+                    <a href="#contacts">Контакты</a>
+                </div>
+                
+                <!-- СОЦСЕТИ - ТОЛЬКО INSTAGRAM -->
+                <div class="footer-social">
+                    <a href="https://www.instagram.com/coffee_dvorik?igsh=aGJhOXlpNWx2YXMz&utm_source=qr" target="_blank" title="Наш Instagram">
+                        <i class="fab fa-instagram"></i>
+                    </a>
+                </div>
+            </div>
+            
+            <!-- КОПИРАЙТ -->
+            <div class="footer-bottom">
+                <p>&copy; 2026 Кофейный дворик. Все права защищены.</p>
+                <p style="margin-top: 10px; font-size: 13px; opacity: 0.8;">
+                    <i class="fas fa-mobile-alt"></i> Ждем вас по адресу: Владикавказ, ул. Колка Кесаева, 8
+                </p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- JavaScript -->
+    <script>
+// ========== ОБЪЯВЛЯЕМ ПЕРЕМЕННЫЕ В НАЧАЛЕ ==========
+let aiKnowledgeBase;
+let userAnswers;
+
+// Данные для карточек продуктов
+const productData = {
+    espresso: {
+        title: "Эспрессо",
+        description: "Классический крепкий кофе",
+        nutrition: "Пищевая ценность: к - 24,1 б - 1,6; ж - 17; у - 0,5",
+        ingredients: "Кофе эспрессо, вода",
+        prices: [
+            { name: "Стандартный", price: "125 ₽", volume: "30 мл" },
+            { name: "Двойной", price: "150 ₽", volume: "60 мл" }
+        ]
+    },
+    americano: {
+        title: "Американо",
+        description: "Классический черный кофе",
+        nutrition: "Пищевая ценность: к - 28,3 б - 1,8; ж - 15; у - 0,7",
+        ingredients: "Кофе эспрессо, горячая вода",
+        prices: [
+            { name: "200 мл", price: "150 ₽", volume: "200 мл" },
+            { name: "300 мл", price: "200 ₽", volume: "300 мл" }
+        ]
+    },
+    latte: {
+        title: "Латте",
+        description: "Нежный кофе с молоком",
+        nutrition: "Пищевая ценность: к - 31,2 б - 2,8; ж - 16; у - 4,1",
+        ingredients: "Кофе эспрессо, молоко, сироп (по желанию)",
+        prices: [
+            { name: "250 мл", price: "175 ₽", volume: "250 мл" },
+            { name: "350 мл", price: "250 ₽", volume: "350 мл" }
+        ]
+    },
+    cappuccino: {
+        title: "Капучино",
+        description: "С воздушной молочной пенкой",
+        nutrition: "Пищевая ценность: к - 29,8 б - 2,5; ж - 15; у - 3,8",
+        ingredients: "Кофе эспрессо, молоко, сахар (по желанию)",
+        prices: [
+            { name: "250 мл", price: "175 ₽", volume: "250 мл" },
+            { name: "350 мл", price: "250 ₽", volume: "350 мл" }
+        ]
+    },
+    flat_white: {
+        title: "Флэт уайт",
+        description: "Австралийский вариант латте",
+        nutrition: "Пищевая ценность: к - 33,1 б - 3,1; ж - 17; у - 4,3",
+        ingredients: "Кофе эспрессо, молоко, микро-пена",
+        prices: [
+            { name: "Стандартный", price: "225 ₽", volume: "200 мл" }
+        ]
+    },
+    mochaccino: {
+        title: "Моккачино",
+        description: "Кофе с шоколадом и молоком",
+        nutrition: "Пищевая ценность: к - 42,6 б - 3,8; ж - 18; у - 8,2",
+        ingredients: "Кофе эспрессо, молоко, шоколадный сироп, какао",
+        prices: [
+            { name: "300 мл", price: "225 ₽", volume: "300 мл" },
+            { name: "400 мл", price: "275 ₽", volume: "400 мл" }
+        ]
+    },
+    sand_coffee: {
+        title: "Кофе на песке",
+        description: "Традиционный восточный кофе, Колумбия / Ирландский крем",
+        nutrition: "Пищевая ценность: к - 26,4 б - 2,1; ж - 16; у - 1,2",
+        ingredients: "Молотый кофе, вода, сахар, кардамон",
+        prices: [
+            { name: "Маленький", price: "150 ₽", volume: "150 мл" },
+            { name: "Большой", price: "200 ₽", volume: "250 мл" }
+        ]
+    },
+    cocoa: {
+        title: "Какао",
+        description: "Традиционный горячий какао",
+        nutrition: "Пищевая ценность: к - 38,2 б - 4,2; ж - 21; у - 12,3",
+        ingredients: "Какао-порошок, молоко, сахар",
+        prices: [
+            { name: "250 мл", price: "175 ₽", volume: "250 мл" },
+            { name: "350 мл", price: "250 ₽", volume: "350 мл" }
+        ]
+    },
+    hot_chocolate: {
+        title: "Горячий шоколад",
+        description: "Насыщенный шоколадный напиток",
+        nutrition: "Пищевая ценность: к - 45,8 б - 5,1; ж - 24; у - 15,7",
+        ingredients: "Темный шоколад, молоко, сливки",
+        prices: [
+            { name: "250 мл", price: "225 ₽", volume: "250 мл" },
+            { name: "350 мл", price: "275 ₽", volume: "350 мл" }
+        ]
+    },
+    classic_raf: {
+        title: "Классический Раф",
+        description: "Кофе со сливками и ванилью",
+        nutrition: "Пищевая ценность: к - 48,2 б - 3,2; ж - 25; у - 6,8",
+        ingredients: "Кофе эспрессо, сливки, ванильный сироп",
+        prices: [
+            { name: "300 мл", price: "225 ₽", volume: "300 мл" },
+            { name: "400 мл", price: "260 ₽", volume: "400 мл" }
+        ]
+    },
+    raspberry_raf: {
+        title: "Малиновый Раф",
+        description: "С малиновым сиропом и сливками",
+        nutrition: "Пищевая ценность: к - 52,4 б - 3,5; ж - 26; у - 9,2",
+        ingredients: "Кофе эспрессо, сливки, малиновый сироп",
+        prices: [
+            { name: "300 мл", price: "250 ₽", volume: "300 мл" },
+            { name: "400 мл", price: "275 ₽", volume: "400 мл" }
+        ]
+    },
+    pistachio_raf: {
+        title: "Фисташковый Раф",
+        description: "С фисташковым сиропом",
+        nutrition: "Пищевая ценность: к - 51,8 б - 3,8; ж - 27; у - 8,9",
+        ingredients: "Кофе эспрессо, сливки, фисташковый сироп",
+        prices: [
+            { name: "300 мл", price: "240 ₽", volume: "300 мл" },
+            { name: "400 мл", price: "275 ₽", volume: "400 мл" }
+        ]
+    },
+    blueberry_raf: {
+        title: "Черничное небо",
+        description: "С черничным сиропом",
+        nutrition: "Пищевая ценность: к - 50,6 б - 3,4; ж - 25; у - 8,7",
+        ingredients: "Кофе эспрессо, сливки, черничный сироп",
+        prices: [
+            { name: "300 мл", price: "240 ₽", volume: "300 мл" },
+            { name: "400 мл", price: "275 ₽", volume: "400 мл" }
+        ]
+    },
+    urban_raf: {
+        title: "Раф с урбечем",
+        description: "Кофейно‑ореховая смесь",
+        nutrition: "Пищевая ценность: к - 55,2 б - 4,1; ж - 29; у - 7,8",
+        ingredients: "Кофе эспрессо, сливки, урбеч",
+        prices: [
+            { name: "300 мл", price: "240 ₽", volume: "300 мл" },
+            { name: "400 мл", price: "275 ₽", volume: "400 мл" }
+        ]
+    },
+    cold_raf: {
+        title: "Холодный Раф",
+        description: "350 мл, охлажденный вариант",
+        nutrition: "Пищевая ценность: к - 46,8 б - 3,1; ж - 24; у - 6,5",
+        ingredients: "Кофе эспрессо, сливки, ваниль, лед",
+        prices: [
+            { name: "350 мл", price: "260 ₽", volume: "350 мл" }
+        ]
+    },
+    cold_latte: {
+        title: "Холодный Латте",
+        description: "350 мл, с молоком и льдом",
+        nutrition: "Пищевая ценность: к - 39,2 б - 2,9; ж - 18; у - 4,8",
+        ingredients: "Кофе эспрессо, молоко, лед",
+        prices: [
+            { name: "350 мл", price: "250 ₽", volume: "350 мл" }
+        ]
+    },
+    cold_americano: {
+        title: "Холодный Американо",
+        description: "350 мл, с кубиками льда",
+        nutrition: "Пищевая ценность: к - 30,4 б - 1,9; ж - 16; у - 1,1",
+        ingredients: "Кофе эспрессо, холодная вода, лед",
+        prices: [
+            { name: "350 мл", price: "200 ₽", volume: "350 мл" }
+        ]
+    },
+    assam_tea: {
+        title: "Ассам",
+        description: "Классический чёрный чай",
+        nutrition: "Калорийность: 2 ккал на 100 мл",
+        ingredients: "Чайные листья Ассам, вода",
+        prices: [
+            { name: "250 мл", price: "120 ₽", volume: "250 мл" },
+            { name: "350 мл", price: "150 ₽", volume: "350 мл" }
+        ]
+    },
+    sencha_tea: {
+        title: "Сенча",
+        description: "Японский зелёный чай",
+        nutrition: "Калорийность: 1 ккал на 100 мл",
+        ingredients: "Чайные листья Сенча, вода",
+        prices: [
+            { name: "250 мл", price: "120 ₽", volume: "250 мл" },
+            { name: "350 мл", price: "150 ₽", volume: "350 мл" }
+        ]
+    },
+    mountain_tea: {
+        title: "Горный",
+        description: "Ароматный горный чай",
+        nutrition: "Калорийность: 3 ккал на 100 мл",
+        ingredients: "Горные травы, чайные листья, вода",
+        prices: [
+            { name: "250 мл", price: "150 ₽", volume: "250 мл" },
+            { name: "350 мл", price: "175 ₽", volume: "350 мл" }
+        ]
+    },
+    jasmine_tea: {
+        title: "Жасмин",
+        description: "Чай с цветами жасмина",
+        nutrition: "Калорийность: 2 ккал на 100 мл",
+        ingredients: "Зелёный чай, цветы жасмина, вода",
+        prices: [
+            { name: "250 мл", price: "150 ₽", volume: "250 мл" },
+            { name: "350 мл", price: "175 ₽", volume: "350 мл" }
+        ]
+    },
+    raspberry_tea: {
+        title: "Малина",
+        description: "Фруктовый чай с малиной",
+        nutrition: "Калорийность: 8 ккал на 100 мл",
+        ingredients: "Чай, сушёная малина, вода",
+        prices: [
+            { name: "250 мл", price: "150 ₽", volume: "250 мл" },
+            { name: "350 мл", price: "180 ₽", volume: "350 мл" }
+        ]
+    },
+    sea_buckthorn_tea: {
+        title: "Облепиха",
+        description: "Чай с облепихой",
+        nutrition: "Калорийность: 10 ккал на 100 мл",
+        ingredients: "Чай, облепиха, вода",
+        prices: [
+            { name: "250 мл", price: "150 ₽", volume: "250 мл" },
+            { name: "350 мл", price: "180 ₽", volume: "350 мл" }
+        ]
+    },
+    orange_ginger_tea: {
+        title: "Апельсин-имбирь",
+        description: "Фирменный чай",
+        nutrition: "Калорийность: 15 ккал на 100 мл",
+        ingredients: "Чай, апельсин, имбирь, вода",
+        prices: [
+            { name: "350 мл", price: "200 ₽", volume: "350 мл" }
+        ]
+    },
+    mountain_sea_buckthorn_tea: {
+        title: "Горный с облепихой",
+        description: "Фирменный чай",
+        nutrition: "Калорийность: 12 ккал на 100 мл",
+        ingredients: "Горные травы, облепиха, вода",
+        prices: [
+            { name: "350 мл", price: "175 ₽", volume: "350 мл" }
+        ]
+    },
+    orange_fresh: {
+        title: "Апельсин (фреш)",
+        description: "Свежевыжатый апельсиновый сок",
+        nutrition: "Калорийность: 45 ккал на 100 мл",
+        ingredients: "Свежие апельсины",
+        prices: [
+            { name: "250 мл", price: "275 ₽", volume: "250 мл" },
+            { name: "350 мл", price: "375 ₽", volume: "350 мл" }
+        ]
+    },
+    grapefruit_fresh: {
+        title: "Грейпфрут (фреш)",
+        description: "Свежевыжатый грейпфрутовый сок",
+        nutrition: "Калорийность: 40 ккал на 100 мл",
+        ingredients: "Свежие грейпфруты",
+        prices: [
+            { name: "250 мл", price: "275 ₽", volume: "250 мл" },
+            { name: "350 мл", price: "375 ₽", volume: "350 мл" }
+        ]
+    },
+    raspberry_lemonade: {
+        title: "Малиновый грейп (лимонад)",
+        description: "Освежающий лимонад",
+        nutrition: "Калорийность: 50 ккал на 100 мл",
+        ingredients: "Малина, лимон, газированная вода",
+        prices: [
+            { name: "500 мл", price: "350 ₽", volume: "500 мл" }
+        ]
+    },
+    tropical_lemonade: {
+        title: "Тропический взрыв (лимонад)",
+        description: "Лимонад с тропическими фруктами",
+        nutrition: "Калорийность: 55 ккал на 100 мл",
+        ingredients: "Ананас, манго, личи, газированная вода",
+        prices: [
+            { name: "500 мл", price: "350 ₽", volume: "500 мл" }
+        ]
+    },
+    blue_castle_lemonade: {
+        title: "Синий замок (лимонад)",
+        description: "Яркий синий лимонад",
+        nutrition: "Калорийность: 48 ккал на 100 мл",
+        ingredients: "Бабочка горошек, лимон, газированная вода",
+        prices: [
+            { name: "500 мл", price: "350 ₽", volume: "500 мл" }
+        ]
+    }
+};
+
+// База знаний AI - ПОЛНОСТЬЮ СВЯЗАНА С ВАШИМ МЕНЮ (8:00-20:00)
+aiKnowledgeBase = {
+    // Маппинг ВСЕХ ваших напитков к характеристикам
+    products: {
+        // КЛАССИЧЕСКИЙ КОФЕ
+        espresso: { 
+            mood: ['energetic', 'focused'], 
+            time: ['morning', 'day'], 
+            preference: ['classic'],
+            strength: 'high',
+            caffeine: 'high',
+            type: 'classic'
+        },
+        americano: { 
+            mood: ['energetic', 'focused'], 
+            time: ['morning', 'day'], 
+            preference: ['classic'],
+            strength: 'medium',
+            caffeine: 'high',
+            type: 'classic'
+        },
+        latte: { 
+            mood: ['relaxed', 'creative'], 
+            time: ['morning', 'day', 'evening'], 
+            preference: ['classic', 'sweet'],
+            strength: 'low',
+            caffeine: 'medium',
+            type: 'classic'
+        },
+        cappuccino: { 
+            mood: ['relaxed', 'creative'], 
+            time: ['morning', 'day'], 
+            preference: ['classic', 'sweet'],
+            strength: 'medium',
+            caffeine: 'medium',
+            type: 'classic'
+        },
+        flat_white: { 
+            mood: ['focused', 'creative'], 
+            time: ['morning', 'day'], 
+            preference: ['classic'],
+            strength: 'medium',
+            caffeine: 'medium',
+            type: 'classic'
+        },
+        mochaccino: { 
+            mood: ['creative', 'relaxed'], 
+            time: ['day', 'evening'], 
+            preference: ['sweet'],
+            strength: 'medium',
+            caffeine: 'medium',
+            type: 'classic'
+        },
+        sand_coffee: { 
+            mood: ['relaxed', 'creative'], 
+            time: ['morning', 'day'], 
+            preference: ['classic'],
+            strength: 'high',
+            caffeine: 'high',
+            type: 'classic'
+        },
+        
+        // КАКАО И ШОКОЛАД
+        cocoa: { 
+            mood: ['relaxed', 'creative'], 
+            time: ['morning', 'day', 'evening'], 
+            preference: ['sweet', 'healthy'],
+            strength: 'low',
+            caffeine: 'none',
+            type: 'hot_chocolate'
+        },
+        hot_chocolate: { 
+            mood: ['relaxed', 'creative'], 
+            time: ['morning', 'day', 'evening'], 
+            preference: ['sweet'],
+            strength: 'medium',
+            caffeine: 'none',
+            type: 'hot_chocolate'
+        },
+        
+        // РАФ КОФЕ
+        classic_raf: { 
+            mood: ['relaxed', 'creative'], 
+            time: ['morning', 'day', 'evening'], 
+            preference: ['sweet'],
+            strength: 'medium',
+            caffeine: 'medium',
+            type: 'raf'
+        },
+        raspberry_raf: { 
+            mood: ['creative', 'energetic'], 
+            time: ['morning', 'day', 'evening'], 
+            preference: ['sweet'],
+            strength: 'medium',
+            caffeine: 'medium',
+            type: 'raf'
+        },
+        pistachio_raf: { 
+            mood: ['creative', 'relaxed'], 
+            time: ['morning', 'day', 'evening'], 
+            preference: ['sweet', 'healthy'],
+            strength: 'medium',
+            caffeine: 'medium',
+            type: 'raf'
+        },
+        blueberry_raf: { 
+            mood: ['creative', 'energetic'], 
+            time: ['morning', 'day', 'evening'], 
+            preference: ['sweet', 'healthy'],
+            strength: 'medium',
+            caffeine: 'medium',
+            type: 'raf'
+        },
+        urban_raf: { 
+            mood: ['creative', 'focused'], 
+            time: ['morning', 'day'], 
+            preference: ['sweet', 'healthy'],
+            strength: 'medium',
+            caffeine: 'medium',
+            type: 'raf'
+        },
+        
+        // ХОЛОДНЫЕ НАПИТКИ
+        cold_raf: { 
+            mood: ['energetic', 'creative'], 
+            time: ['day', 'evening'], 
+            preference: ['cold', 'sweet'],
+            strength: 'medium',
+            caffeine: 'medium',
+            type: 'cold'
+        },
+        cold_latte: { 
+            mood: ['relaxed', 'creative'], 
+            time: ['day', 'evening'], 
+            preference: ['cold', 'classic'],
+            strength: 'low',
+            caffeine: 'medium',
+            type: 'cold'
+        },
+        cold_americano: { 
+            mood: ['energetic', 'focused'], 
+            time: ['day', 'evening'], 
+            preference: ['cold', 'classic'],
+            strength: 'medium',
+            caffeine: 'high',
+            type: 'cold'
+        },
+        
+        // ЧАЙ
+        assam_tea: { 
+            mood: ['relaxed', 'focused'], 
+            time: ['morning', 'day', 'evening'], 
+            preference: ['classic', 'healthy'],
+            strength: 'medium',
+            caffeine: 'low',
+            type: 'tea'
+        },
+        sencha_tea: { 
+            mood: ['relaxed', 'focused'], 
+            time: ['morning', 'day'], 
+            preference: ['healthy'],
+            strength: 'low',
+            caffeine: 'low',
+            type: 'tea'
+        },
+        mountain_tea: { 
+            mood: ['relaxed', 'creative'], 
+            time: ['morning', 'day', 'evening'], 
+            preference: ['healthy'],
+            strength: 'low',
+            caffeine: 'none',
+            type: 'tea'
+        },
+        jasmine_tea: { 
+            mood: ['relaxed', 'creative'], 
+            time: ['morning', 'day', 'evening'], 
+            preference: ['classic', 'healthy'],
+            strength: 'low',
+            caffeine: 'low',
+            type: 'tea'
+        },
+        raspberry_tea: { 
+            mood: ['creative', 'energetic'], 
+            time: ['morning', 'day', 'evening'], 
+            preference: ['sweet', 'healthy'],
+            strength: 'low',
+            caffeine: 'none',
+            type: 'tea'
+        },
+        sea_buckthorn_tea: { 
+            mood: ['energetic', 'creative'], 
+            time: ['morning', 'day', 'evening'], 
+            preference: ['healthy'],
+            strength: 'low',
+            caffeine: 'none',
+            type: 'tea'
+        },
+        orange_ginger_tea: { 
+            mood: ['energetic', 'creative'], 
+            time: ['morning', 'day', 'evening'], 
+            preference: ['healthy', 'sweet'],
+            strength: 'medium',
+            caffeine: 'none',
+            type: 'tea'
+        },
+        mountain_sea_buckthorn_tea: { 
+            mood: ['energetic', 'creative'], 
+            time: ['morning', 'day', 'evening'], 
+            preference: ['healthy'],
+            strength: 'medium',
+            caffeine: 'none',
+            type: 'tea'
+        },
+        
+        // ФРЕШИ И ЛИМОНАДЫ
+        orange_fresh: { 
+            mood: ['energetic', 'creative'], 
+            time: ['morning', 'day'], 
+            preference: ['healthy'],
+            strength: 'low',
+            caffeine: 'none',
+            type: 'fresh'
+        },
+        grapefruit_fresh: { 
+            mood: ['energetic', 'focused'], 
+            time: ['morning', 'day'], 
+            preference: ['healthy'],
+            strength: 'low',
+            caffeine: 'none',
+            type: 'fresh'
+        },
+        raspberry_lemonade: { 
+            mood: ['creative', 'energetic'], 
+            time: ['day', 'evening'], 
+            preference: ['sweet', 'cold'],
+            strength: 'low',
+            caffeine: 'none',
+            type: 'lemonade'
+        },
+        tropical_lemonade: { 
+            mood: ['creative', 'energetic'], 
+            time: ['day', 'evening'], 
+            preference: ['sweet', 'cold'],
+            strength: 'low',
+            caffeine: 'none',
+            type: 'lemonade'
+        },
+        blue_castle_lemonade: { 
+            mood: ['creative', 'energetic'], 
+            time: ['day', 'evening'], 
+            preference: ['sweet', 'cold'],
+            strength: 'low',
+            caffeine: 'none',
+            type: 'lemonade'
+        }
+    },
+    
+    // Временные интервалы ПОД ГРАФИК РАБОТЫ 8:00-20:00
+    timeDefinitions: {
+        morning: "8:00 - 12:00",    // Утро (открытие до обеда)
+        day: "12:00 - 17:00",       // День (обеденное время)
+        evening: "17:00 - 20:00"    // Вечер (до закрытия)
+    },
+    
+    // Состояния человека по времени суток (под график работы)
+    timeMoods: {
+        morning: ['energetic', 'focused'],      // Утром люди обычно бодрые и сосредоточенные
+        day: ['creative', 'focused', 'relaxed'], // Днем может быть разное состояние
+        evening: ['relaxed', 'creative']         // Вечером расслабление и творчество
+    },
+    
+    // Факты о кофе
+    coffeeFacts: [
+        "Идеальная температура для подачи кофе - 60-70°C",
+        "Кофейное зерно на самом деле - косточка ягоды",
+        "Эспрессо содержит меньше кофеина, чем фильтр-кофе",
+        "Латте в переводе с итальянского означает 'молоко'",
+        "Кофеин начинает действовать уже через 10 минут",
+        "Флэт уайт придумали в Австралии и Новой Зеландии",
+        "Капучино назван в честь монахов-капуцинов",
+        "Раф-кофе изобрели в Москве в 1990-х"
+    ],
+    
+    // Сообщения для рекомендаций
+    reasonMessages: {
+        energetic: [
+            "Содержит оптимальное количество кофеина для бодрости",
+            "Заряжает энергией без перевозбуждения",
+            "Идеальный баланс для активного дня"
+        ],
+        relaxed: [
+            "Нежный вкус способствует расслаблению",
+            "Идеален для отдыха и наслаждения моментом",
+            "Создает уютную атмосферу"
+        ],
+        creative: [
+            "Вдохновляющий вкус для творчества",
+            "Сочетание ароматов пробуждает воображение",
+            "Любимый напиток креативных людей"
+        ],
+        focused: [
+            "Помогает сконцентрироваться на задачах",
+            "Оптимальный кофеин для умственной работы",
+            "Не отвлекает от важных дел"
+        ],
+        morning: [
+            "Идеальное начало дня",
+            "Пробуждает мягко и естественно",
+            "Утренний ритуал для хорошего настроения"
+        ],
+        day: [
+            "Отлично подходит для дневного перерыва",
+            "Поддерживает энергию до вечера",
+            "Популярный выбор в это время"
+        ],
+        evening: [
+            "Подходит для вечернего отдыха",
+            "Не мешает сну при вечернем употреблении",
+            "Создает атмосферу уюта перед закрытием"
+        ]
+    }
+};
+
+// Переменные для хранения ответов пользователя
+userAnswers = {
+    mood: null,
+    time: null,
+    preference: null
+};
+
+// Инициализация AI системы
+function initAISystem() {
+    console.log('Инициализация AI системы...');
+    
+    const options = document.querySelectorAll('.ai-option');
+    const nextButtons = document.querySelectorAll('.ai-next-btn');
+    const prevButtons = document.querySelectorAll('.ai-prev-btn');
+    const submitButton = document.querySelector('.ai-submit-btn');
+    
+    // Обработка выбора опции
+    options.forEach(option => {
+        option.addEventListener('click', function() {
+            const step = this.closest('.ai-step');
+            const stepNumber = step.dataset.step;
+            const value = this.dataset.value;
+            
+            // Сбрасываем выделение у других опций в этом шаге
+            step.querySelectorAll('.ai-option').forEach(opt => {
+                opt.classList.remove('selected');
+            });
+            
+            // Выделяем выбранную опцию
+            this.classList.add('selected');
+            
+            // Сохраняем ответ
+            switch(stepNumber) {
+                case '1':
+                    userAnswers.mood = value;
+                    break;
+                case '2':
+                    userAnswers.time = value;
+                    break;
+                case '3':
+                    userAnswers.preference = value;
+                    break;
+            }
+            
+            // Активируем кнопку далее
+            const nextBtn = step.querySelector('.ai-next-btn, .ai-submit-btn');
+            if (nextBtn) {
+                nextBtn.disabled = false;
+            }
+        });
+    });
+    
+    // Кнопка "Далее"
+    nextButtons.forEach(btn => {
+        btn.addEventListener('click', function() {
+            const currentStep = this.closest('.ai-step');
+            const currentStepNum = parseInt(currentStep.dataset.step);
+            const nextStepNum = currentStepNum + 1;
+            
+            // Обновляем прогресс-бар
+            updateProgressBar(nextStepNum);
+            
+            // Переключаем шаги
+            currentStep.classList.remove('active');
+            const nextStep = document.querySelector(`.ai-step[data-step="${nextStepNum}"]`);
+            if (nextStep) {
+                nextStep.classList.add('active');
+            }
+        });
+    });
+    
+    // Кнопка "Назад"
+    prevButtons.forEach(btn => {
+        btn.addEventListener('click', function() {
+            const currentStep = this.closest('.ai-step');
+            const currentStepNum = parseInt(currentStep.dataset.step);
+            const prevStepNum = currentStepNum - 1;
+            
+            // Обновляем прогресс-бар
+            updateProgressBar(prevStepNum);
+            
+            // Переключаем шаги
+            currentStep.classList.remove('active');
+            const prevStep = document.querySelector(`.ai-step[data-step="${prevStepNum}"]`);
+            if (prevStep) {
+                prevStep.classList.add('active');
+            }
+        });
+    });
+    
+    // Кнопка "Получить рекомендацию"
+    if (submitButton) {
+        submitButton.addEventListener('click', function() {
+            generateRecommendation();
+        });
+    }
+    
+    // Кнопка "Заказать сейчас"
+    const recOrderBtn = document.getElementById('recOrderBtn');
+    if (recOrderBtn) {
+        recOrderBtn.addEventListener('click', function() {
+            const productId = this.dataset.productId;
+            if (productId && productData[productId]) {
+                const productCard = document.querySelector(`.menu-item[data-card="${productId}"]`);
+                if (productCard) {
+                    productCard.click();
+                }
+            }
+        });
+    }
+    
+    // Кнопка "Показать в меню"
+    const recShowBtn = document.getElementById('recShowBtn');
+    if (recShowBtn) {
+        recShowBtn.addEventListener('click', function() {
+            const productId = this.dataset.productId;
+            if (productId && productData[productId]) {
+                const productCard = document.querySelector(`.menu-item[data-card="${productId}"]`);
+                if (productCard) {
+                    productCard.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                    
+                    // Анимация подсветки
+                    productCard.style.animation = 'highlightPulse 2s ease';
+                    setTimeout(() => {
+                        productCard.style.animation = '';
+                    }, 2000);
+                }
+            }
+        });
+    }
+    
+    // Кнопка "Пройти заново"
+    const recRestartBtn = document.getElementById('recRestartBtn');
+    if (recRestartBtn) {
+        recRestartBtn.addEventListener('click', function() {
+            resetAIWizard();
+        });
+    }
+}
+
+// Обновление прогресс-бара
+function updateProgressBar(step) {
+    const progress = (step / 3) * 100;
+    const progressBar = document.querySelector('.ai-progress-bar');
+    if (progressBar) {
+        progressBar.style.width = `${progress}%`;
+    }
+    
+    // Обновляем точки
+    document.querySelectorAll('.ai-step-dot').forEach((dot, index) => {
+        if (index < step) {
+            dot.classList.add('active');
+        } else {
+            dot.classList.remove('active');
+        }
+    });
+}
+
+// Генерация рекомендации на основе ответов
+function generateRecommendation() {
+    // Проверяем, что все ответы есть
+    if (!userAnswers.mood || !userAnswers.time || !userAnswers.preference) {
+        alert('Пожалуйста, ответьте на все вопросы');
+        return;
+    }
+    
+    // Алгоритм подбора напитка
+    let recommendedProduct = findBestMatch();
+    
+    // Проверяем, есть ли продукт в данных
+    if (!productData[recommendedProduct]) {
+        // Ищем любой доступный продукт
+        recommendedProduct = Object.keys(productData)[0];
+    }
+    
+    // Показываем результат
+    showRecommendation(recommendedProduct);
+    
+    // Обновляем прогресс-бар
+    updateProgressBar(4);
+}
+
+// Алгоритм поиска лучшего совпадения
+function findBestMatch() {
+    let bestMatch = null;
+    let bestScore = 0;
+    
+    // Проходим по всем продуктам
+    for (const productId in aiKnowledgeBase.products) {
+        const product = aiKnowledgeBase.products[productId];
+        
+        // Проверяем, есть ли продукт в меню
+        if (!productData[productId]) {
+            continue; // Пропускаем если нет в productData
+        }
+        
+        let score = 0;
+        
+        // Совпадение по настроению (3 балла)
+        if (product.mood && product.mood.includes(userAnswers.mood)) {
+            score += 3;
+        }
+        
+        // Совпадение по времени (2 балла)
+        if (product.time && product.time.includes(userAnswers.time)) {
+            score += 2;
+        }
+        
+        // Совпадение по предпочтениям (2 балла)
+        if (product.preference && product.preference.includes(userAnswers.preference)) {
+            score += 2;
+        }
+        
+        // Бонусные баллы
+        if (userAnswers.time === 'evening' && product.caffeine === 'none') {
+            score += 1;
+        }
+        
+        if (userAnswers.time === 'morning' && product.caffeine === 'high') {
+            score += 1;
+        }
+        
+        if (userAnswers.mood === 'energetic' && product.strength === 'high') {
+            score += 1;
+        }
+        
+        if (userAnswers.mood === 'relaxed' && product.strength === 'low') {
+            score += 1;
+        }
+        
+        // Обновляем лучший результат
+        if (score > bestScore) {
+            bestScore = score;
+            bestMatch = productId;
+        }
+    }
+    
+    // Если не нашли хорошего совпадения, выбираем популярное
+    if (!bestMatch || bestScore < 3) {
+        const popularDrinks = ['latte', 'cappuccino', 'classic_raf', 'raspberry_raf'];
+        for (const drink of popularDrinks) {
+            if (productData[drink]) {
+                bestMatch = drink;
+                break;
+            }
+        }
+    }
+    
+    return bestMatch;
+}
+
+// Показ рекомендации
+function showRecommendation(productId) {
+    // Получаем данные продукта
+    const productInfo = productData[productId];
+    
+    if (!productInfo) {
+        alert('Извините, произошла ошибка. Попробуйте еще раз.');
+        return;
+    }
+    
+    // Получаем карточку продукта
+    const productCard = document.querySelector(`.menu-item[data-card="${productId}"]`);
+    
+    // Получаем изображение
+    let imageSrc = '';
+    if (productCard) {
+        const imageElement = productCard.querySelector('img');
+        if (imageElement) {
+            imageSrc = imageElement.src;
+        }
+    }
+    
+    // Заполняем данные
+    const recImage = document.getElementById('recImage');
+    if (recImage && imageSrc) {
+        recImage.src = imageSrc;
+        recImage.alt = productInfo.title;
+    }
+    
+    document.getElementById('recTitle').textContent = productInfo.title;
+    document.getElementById('recDesc').textContent = productInfo.description;
+    
+    // Форматируем цену
+    const priceText = productInfo.prices.map(p => p.price).join(' / ');
+    document.getElementById('recPrice').textContent = priceText;
+    
+    // Генерируем причины
+    const reasonsList = document.getElementById('recReasonsList');
+    if (reasonsList) {
+        reasonsList.innerHTML = '';
+        
+        const reasons = generateReasons(productId);
+        reasons.forEach(reason => {
+            const li = document.createElement('li');
+            li.textContent = reason;
+            reasonsList.appendChild(li);
+        });
+    }
+    
+    // Добавляем факт
+    const factElement = document.getElementById('recFact');
+    if (factElement) {
+        const randomFact = aiKnowledgeBase.coffeeFacts[
+            Math.floor(Math.random() * aiKnowledgeBase.coffeeFacts.length)
+        ];
+        factElement.textContent = randomFact;
+    }
+    
+    // Сохраняем ID продукта для кнопок
+    const recOrderBtn = document.getElementById('recOrderBtn');
+    const recShowBtn = document.getElementById('recShowBtn');
+    if (recOrderBtn) recOrderBtn.dataset.productId = productId;
+    if (recShowBtn) recShowBtn.dataset.productId = productId;
+    
+    // Показываем результат
+    const activeStep = document.querySelector('.ai-step.active');
+    if (activeStep) {
+        activeStep.classList.remove('active');
+    }
+    
+    const resultElement = document.getElementById('aiResult');
+    if (resultElement) {
+        resultElement.style.display = 'block';
+    }
+}
+
+// Генерация причин для рекомендации
+function generateReasons(productId) {
+    const product = aiKnowledgeBase.products[productId];
+    const reasons = [];
+    
+    if (!product) return ["Отличный выбор для вашего настроения!"];
+    
+    // Причина по настроению
+    if (product.mood && product.mood.includes(userAnswers.mood)) {
+        if (userAnswers.mood === 'energetic') {
+            reasons.push("Идеально подходит для бодрого настроения");
+        } else if (userAnswers.mood === 'relaxed') {
+            reasons.push("Поможет расслабиться и отдохнуть");
+        } else if (userAnswers.mood === 'creative') {
+            reasons.push("Вдохновит на творчество");
+        } else if (userAnswers.mood === 'focused') {
+            reasons.push("Поможет сконцентрироваться");
+        }
+    }
+    
+    // Причина по времени
+    if (product.time && product.time.includes(userAnswers.time)) {
+        const timeText = userAnswers.time === 'morning' ? 'утра' : 
+                        userAnswers.time === 'day' ? 'дня' : 'вечера';
+        reasons.push(`Отличный выбор для ${timeText} (${aiKnowledgeBase.timeDefinitions[userAnswers.time]})`);
+    }
+    
+    // Причина по предпочтениям
+    if (product.preference && product.preference.includes(userAnswers.preference)) {
+        if (userAnswers.preference === 'classic') {
+            reasons.push("Классический вкус, проверенный временем");
+        } else if (userAnswers.preference === 'sweet') {
+            reasons.push("Нежный сладкий вкус для наслаждения");
+        } else if (userAnswers.preference === 'cold') {
+            reasons.push("Освежающий вариант для бодрости");
+        } else if (userAnswers.preference === 'healthy') {
+            reasons.push("Полезный и натуральный состав");
+        }
+    }
+    
+    // Добавляем про кофеин если нужно
+    if (userAnswers.time === 'morning' && product.caffeine === 'high') {
+        reasons.push("Содержит достаточно кофеина для пробуждения");
+    } else if (userAnswers.time === 'evening' && product.caffeine === 'none') {
+        reasons.push("Без кофеина - можно пить вечером без вреда для сна");
+    }
+    
+    // Если причин мало, добавляем общие
+    if (reasons.length < 2) {
+        reasons.push("Популярный выбор наших гостей");
+        reasons.push("Сбалансированный вкус и аромат");
+    }
+    
+    // Ограничиваем максимум 3 причины
+    return reasons.slice(0, 3);
+}
+
+// Сброс визарда
+function resetAIWizard() {
+    // Сбрасываем ответы
+    userAnswers = { mood: null, time: null, preference: null };
+    
+    // Сбрасываем выделение опций
+    document.querySelectorAll('.ai-option').forEach(option => {
+        option.classList.remove('selected');
+    });
+    
+    // Сбрасываем кнопки
+    document.querySelectorAll('.ai-next-btn, .ai-submit-btn').forEach(btn => {
+        btn.disabled = true;
+    });
+    
+    // Скрываем результат
+    const resultElement = document.getElementById('aiResult');
+    if (resultElement) {
+        resultElement.style.display = 'none';
+    }
+    
+    // Возвращаемся к первому шагу
+    document.querySelectorAll('.ai-step').forEach(step => {
+        step.classList.remove('active');
+    });
+    const firstStep = document.querySelector('.ai-step[data-step="1"]');
+    if (firstStep) {
+        firstStep.classList.add('active');
+    }
+    
+    // Сбрасываем прогресс-бар
+    updateProgressBar(1);
+}
+
+// ========== ОТПРАВКА ОТЗЫВОВ В TELEGRAM ==========
+// Функция для показа уведомлений
+function showNotification(message, type = 'success') {
+    const notification = document.getElementById('notification');
+    if (!notification) return;
+    
+    notification.textContent = message;
+    notification.className = `notification ${type}`;
+    notification.style.display = 'flex';
+    
+    // Показываем уведомление
+    setTimeout(() => {
+        notification.classList.add('show');
+    }, 10);
+    
+    // Скрываем через 5 секунд
+    setTimeout(() => {
+        notification.classList.remove('show');
+        setTimeout(() => {
+            notification.style.display = 'none';
+        }, 300);
+    }, 5000);
+}
+
+// Функция для отправки отзыва
+async function sendReviewToTelegram(reviewData) {
+    try {
+        // Показываем уведомление о начале отправки
+        showNotification('Отправляем ваш отзыв...', 'warning');
+        
+        // Формируем сообщение для Telegram
+        const stars = '⭐'.repeat(reviewData.rating) + '☆'.repeat(5 - reviewData.rating);
+        const telegramMessage = `
+📝 *Новый отзыв на сайте "Кофейный дворик"*
+
+👤 *Имя:* ${reviewData.name}
+📧 *Email:* ${reviewData.email || 'Не указан'}
+📋 *Тип обращения:* ${getReviewTypeText(reviewData.type)}
+⭐ *Оценка:* ${stars} (${reviewData.rating}/5)
+
+💬 *Сообщение:*
+${reviewData.message}
+
+🕐 *Отправлено:* ${reviewData.date}
+        `.trim();
+        
+        // Ваши данные Telegram (замените на свои)
+        const TELEGRAM_BOT_TOKEN = '8496709560:AAHadcvLMczBWHF714-HFKxm3lTSJJiUWmM';
+        const TELEGRAM_CHAT_ID = '647089340';
+        
+        // Отправляем в Telegram через Telegram Bot API
+        const url = `https://api.telegram.org/bot${TELEGRAM_BOT_TOKEN}/sendMessage`;
+        const response = await fetch(url, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({
+                chat_id: TELEGRAM_CHAT_ID,
+                text: telegramMessage,
+                parse_mode: 'Markdown',
+                disable_web_page_preview: true
+            })
+        });
+        
+        if (response.ok) {
+            const result = await response.json();
+            console.log('Отзыв успешно отправлен в Telegram:', result);
+            showNotification('✅ Отзыв успешно отправлен! Спасибо за ваше мнение!', 'success');
+            return true;
+        } else {
+            throw new Error(`Ошибка отправки: ${response.status}`);
+        }
+    } catch (error) {
+        console.error('Ошибка отправки отзыва в Telegram:', error);
+        showNotification('❌ Ошибка при отправке отзыва. Пожалуйста, попробуйте еще раз.', 'error');
+        
+        // Пробуем альтернативный способ через Proxy
+        try {
+            return await sendReviewAlternative(reviewData);
+        } catch (altError) {
+            console.error('Альтернативный метод также не сработал:', altError);
+            return false;
+        }
+    }
+}
+
+// Альтернативный метод отправки (если основной не работает)
+async function sendReviewAlternative(reviewData) {
+    // Используем прокси или другой метод
+    const proxyUrl = 'https://cors-anywhere.herokuapp.com/';
+    const telegramUrl = `https://api.telegram.org/bot8496709560:AAHadcvLMczBWHF714-HFKxm3lTSJJiUWmM/sendMessage`;
+    
+    const stars = '⭐'.repeat(reviewData.rating) + '☆'.repeat(5 - reviewData.rating);
+    const telegramMessage = `
+📝 Новый отзыв на сайте "Кофейный дворик"
+
+👤 Имя: ${reviewData.name}
+📧 Email: ${reviewData.email || 'Не указан'}
+📋 Тип: ${getReviewTypeText(reviewData.type)}
+⭐ Оценка: ${stars} (${reviewData.rating}/5)
+
+💬 Сообщение:
+${reviewData.message}
+
+🕐 Отправлено: ${reviewData.date}
+    `.trim();
+    
+    try {
+        const response = await fetch(proxyUrl + telegramUrl, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({
+                chat_id: '647089340',
+                text: telegramMessage,
+                parse_mode: 'Markdown',
+                disable_web_page_preview: true
+            })
+        });
+        
+        if (response.ok) {
+            showNotification('✅ Отзыв отправлен через альтернативный метод!', 'success');
+            return true;
+        }
+    } catch (error) {
+        throw error;
+    }
+}
+
+// Вспомогательная функция для получения текста типа отзыва
+function getReviewTypeText(type) {
+    const types = {
+        'review': 'Отзыв о посещении',
+        'suggestion': 'Предложение по меню',
+        'improvement': 'Идея для улучшения',
+        'other': 'Другое'
+    };
+    return types[type] || type;
+}
+
+// ========== ОБРАБОТЧИК ФОРМЫ ОТЗЫВОВ ==========
+document.getElementById('submit-review').addEventListener('click', async function() {
+    const name = document.getElementById('name').value.trim();
+    const message = document.getElementById('message').value.trim();
+    const reviewType = document.getElementById('review-type').value;
+    const rating = parseInt(document.getElementById('rating').value);
+    
+    // Проверка обязательных полей
+    if (!name || !message) {
+        showNotification('⚠️ Пожалуйста, заполните обязательные поля (имя и сообщение)', 'warning');
+        return;
+    }
+    
+    if (message.length < 10) {
+        showNotification('⚠️ Сообщение должно содержать не менее 10 символов', 'warning');
+        return;
+    }
+    
+    // Собираем данные отзыва
+    const reviewData = {
+        name: name,
+        email: document.getElementById('email').value.trim(),
+        type: reviewType,
+        message: message,
+        rating: rating,
+        date: new Date().toLocaleString('ru-RU', {
+            day: '2-digit',
+            month: '2-digit',
+            year: 'numeric',
+            hour: '2-digit',
+            minute: '2-digit'
+        })
+    };
+    
+    // Сохраняем в localStorage как резервную копию
+    let reviews = JSON.parse(localStorage.getItem('coffeeDvorikReviews')) || [];
+    reviews.push(reviewData);
+    localStorage.setItem('coffeeDvorikReviews', JSON.stringify(reviews));
+    
+    // Отправляем в Telegram
+    this.disabled = true;
+    const originalText = this.innerHTML;
+    this.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Отправка...';
+    
+    const success = await sendReviewToTelegram(reviewData);
+    
+    if (success) {
+        // Очищаем форму после успешной отправки
+        document.getElementById('name').value = '';
+        document.getElementById('email').value = '';
+        document.getElementById('message').value = '';
+        document.getElementById('review-type').value = 'review';
+        document.getElementById('rating').value = '5';
+    }
+    
+    // Восстанавливаем кнопку
+    setTimeout(() => {
+        this.disabled = false;
+        this.innerHTML = originalText;
+    }, 2000);
+});
+
+// ========== СЛАЙДЕР С АВТОСМЕНОЙ ==========
+const slides = document.querySelectorAll('.slide');
+const dots = document.querySelectorAll('.dot');
+const prevBtn = document.querySelector('.prev-btn');
+const nextBtn = document.querySelector('.next-btn');
+let currentSlide = 0;
+let slideInterval;
+
+// Функция показа слайда
+function showSlide(n) {
+    // Скрываем все слайды
+    slides.forEach(slide => {
+        slide.classList.remove('active');
+    });
+    
+    // Убираем активный класс у всех точек
+    dots.forEach(dot => {
+        dot.classList.remove('active');
+    });
+    
+    // Корректируем индекс если вышли за пределы
+    if (n >= slides.length) {
+        currentSlide = 0;
+    } else if (n < 0) {
+        currentSlide = slides.length - 1;
+    } else {
+        currentSlide = n;
+    }
+    
+    // Показываем текущий слайд
+    slides[currentSlide].classList.add('active');
+    dots[currentSlide].classList.add('active');
+}
+
+// Функция следующего слайда
+function nextSlide() {
+    showSlide(currentSlide + 1);
+}
+
+// Функция предыдущего слайда
+function prevSlide() {
+    showSlide(currentSlide - 1);
+}
+
+// Запуск автоматической смены
+function startSlideShow() {
+    slideInterval = setInterval(nextSlide, 5000); // Меняем каждые 5 секунд
+}
+
+// Остановка автоматической смены
+function stopSlideShow() {
+    clearInterval(slideInterval);
+}
+
+// Обработчики событий
+nextBtn.addEventListener('click', () => {
+    nextSlide();
+    stopSlideShow();
+    startSlideShow(); // Перезапускаем таймер после ручного переключения
+});
+
+prevBtn.addEventListener('click', () => {
+    prevSlide();
+    stopSlideShow();
+    startSlideShow(); // Перезапускаем таймер после ручного переключения
+});
+
+// Клик по точкам
+dots.forEach((dot, index) => {
+    dot.addEventListener('click', () => {
+        showSlide(index);
+        stopSlideShow();
+        startSlideShow(); // Перезапускаем таймер после ручного переключения
+    });
+});
+
+// Пауза при наведении на слайдер
+document.querySelector('.slider-container').addEventListener('mouseenter', stopSlideShow);
+document.querySelector('.slider-container').addEventListener('mouseleave', startSlideShow);
+
+// ========== СУЩЕСТВУЮЩИЙ КОД (ваш оригинальный JavaScript) ==========
+
+// Элементы модального окна
+const modal = document.getElementById('productModal');
+const modalClose = document.getElementById('modalClose');
+const modalTitle = document.getElementById('modalProductTitle');
+const modalDescription = document.getElementById('modalDescription');
+const modalIngredients = document.getElementById('modalIngredients');
+
+// Открытие модального окна при клике на карточку
+document.querySelectorAll('.menu-item').forEach(item => {
+    item.addEventListener('click', function(e) {
+        const cardType = this.getAttribute('data-card');
+        const product = productData[cardType];
+        
+        if (product) {
+            // Заполняем данные
+            modalTitle.textContent = product.title;
+            modalDescription.textContent = product.nutrition;
+            modalIngredients.textContent = product.ingredients;
+            
+            // Очищаем контейнер с ценами
+            const pricesContainer = document.querySelector('.prices-container');
+            pricesContainer.innerHTML = '';
+            
+            // Добавляем цены
+            product.prices.forEach(price => {
+                const priceItem = document.createElement('div');
+                priceItem.className = 'price-item';
+                priceItem.innerHTML = `
+                    <div class="price-label">${price.name}</div>
+                    <div class="price-value">${price.price}</div>
+                    <div class="price-volume">${price.volume}</div>
+                `;
+                pricesContainer.appendChild(priceItem);
+            });
+            
+            // Показываем модальное окно
+            modal.classList.add('active');
+            document.body.style.overflow = 'hidden';
+        }
+    });
+});
+
+// Закрытие модального окна
+modalClose.addEventListener('click', () => {
+    modal.classList.remove('active');
+    document.body.style.overflow = 'auto';
+});
+
+// Закрытие при клике вне окна
+modal.addEventListener('click', (e) => {
+    if (e.target === modal) {
+        modal.classList.remove('active');
+        document.body.style.overflow = 'auto';
+    }
+});
+
+// ФИЛЬТРАЦИЯ МЕНЮ
+document.querySelectorAll('.filter-btn').forEach(button => {
+    button.addEventListener('click', (e) => {
+        // Убираем активный класс у всех кнопок
+        document.querySelectorAll('.filter-btn').forEach(btn => {
+            btn.classList.remove('active');
+        });
+        
+        // Добавляем активный класс текущей кнопке
+        e.target.classList.add('active');
+        
+        // Получаем фильтр
+        const filter = e.target.getAttribute('data-filter');
+        
+        // Показываем/скрываем товары
+        document.querySelectorAll('.menu-item').forEach(item => {
+            if (filter === 'all' || item.getAttribute('data-category') === filter) {
+                item.style.display = 'flex';
+            } else {
+                item.style.display = 'none';
+            }
+        });
+    });
+});
+
+// ПЛАВНАЯ ПРОКРУТКА
+document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+    anchor.addEventListener('click', function(e) {
+        e.preventDefault();
+        
+        const targetId = this.getAttribute('href');
+        if (targetId === '#') return;
+        
+        const targetElement = document.querySelector(targetId);
+        if (targetElement) {
+            // Обновляем активную ссылку
+            document.querySelectorAll('.nav-link').forEach(link => {
+                link.classList.remove('active');
+            });
+            this.classList.add('active');
+            
+            // Прокрутка
+            window.scrollTo({
+                top: targetElement.offsetTop - 100,
+                behavior: 'smooth'
+            });
+        }
+    });
+});
+
+// Инициализация
+showSlide(0);
+startSlideShow(); // Запускаем автоматическую смену
+
+// Запускаем AI систему после загрузки
+document.addEventListener('DOMContentLoaded', function() {
+    initAISystem();
+});
+    </script>
+</body>
+</html>
